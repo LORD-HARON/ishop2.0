@@ -1,0 +1,106 @@
+<div class="main">
+    <div class="search-conteiner">
+        <ng-container *ngIf="isChecked === false">
+            <div class="input-box">
+                <input #numOrder type="number" placeholder="Введите номер заказа"
+                    (input)="onInputSearchData($event.target.value)" [min]="0" (keyup.enter)="onSearchOrder()">
+                <button *ngIf="numOrder.value.length > 0" (click)="onClearNumOrder(); numOrder.value = ''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="btn">
+                <a (click)="onSearchOrder()">Поиск</a>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="isChecked === true">
+            <div class="input-box">
+                <input #adresOrder type="text" placeholder="Введите адрес"
+                    (input)="onInputSearchData($event.target.value)" (keyup.enter)="onSearchOrder()">
+                <button *ngIf="adresOrder.value.length > 0" (click)="onClearNumOrder(); adresOrder.value = ''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="btn">
+                <a (click)="onSearchOrder()">Поиск</a>
+            </div>
+        </ng-container>
+        <div class="search-adres">
+            <label>
+                <input type="checkbox" [(ngModel)]="isChecked" (keyup.enter)="onSearchOrder()">
+                <div class="icon">
+                    <span class="material-icons">
+                        where_to_vote
+                    </span>
+                </div>
+            </label>
+        </div>
+        <span class="timer" *ngIf="screenWidth > 1000"> Список заказов обновится через: {{timerValue}} </span>
+        <button class="profile-button" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <span class="material-icons">
+                person
+            </span>
+            <span>Профиль</span>
+            <span class="material-icons">
+                arrow_drop_down
+            </span></button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="opentInstructionDialog()" class="instruction-button">Инструкции</button>
+            <button mat-menu-item *ngIf="isAdminIshop" (click)="openDataInvoiceDialog()"
+                class="invoice-settings-button">Настройка договоров</button>
+            <button mat-menu-item (click)="onClickLogout()" class="logout-button">Выйти</button>
+        </mat-menu>
+    </div>
+    <mat-tab-group [(selectedIndex)]="tabIndex" (selectedTabChange)="selectedTab($event)" class="tabs">
+        <mat-tab label="Все">
+            <app-order-list-form [data]="'%'" (onChanged)="onChanged($event)"></app-order-list-form>
+        </mat-tab>
+        <mat-tab label="Долгиновский">
+            <app-order-list-form *ngIf="tabIndex === 1" [data]="'8'"
+                (onChanged)="onChanged($event)"></app-order-list-form>
+        </mat-tab>
+        <mat-tab label="Каменногорская">
+            <app-order-list-form *ngIf="tabIndex === 2" [data]="'22'"
+                (onChanged)="onChanged($event)"></app-order-list-form>
+        </mat-tab>
+        <mat-tab label="Диамант">
+            <app-order-list-form *ngIf="tabIndex === 3" [data]="'31'"
+                (onChanged)="onChanged($event)"></app-order-list-form>
+        </mat-tab>
+        <mat-tab label="Гродно">
+            <app-order-list-form *ngIf="tabIndex === 4" [data]="'33'"
+                (onChanged)="onChanged($event)"></app-order-list-form>
+        </mat-tab>
+        <mat-tab label="Брест">
+            <app-order-list-form *ngIf="tabIndex === 5" [data]="'11'"
+                (onChanged)="onChanged($event)"></app-order-list-form>
+        </mat-tab>
+        <mat-tab label="Молодечно">
+            <app-order-list-form *ngIf="tabIndex === 6" [data]="'25'"
+                (onChanged)="onChanged($event)"></app-order-list-form>
+        </mat-tab>
+        <mat-tab label="Тимирязева">
+            <app-order-list-form *ngIf="tabIndex === 7" [data]="'21'"
+                (onChanged)="onChanged($event)"></app-order-list-form>
+        </mat-tab>
+        <mat-tab label="МОМО">
+            <app-order-list-form *ngIf="tabIndex === 8" [data]="'18'"
+                (onChanged)="onChanged($event)"></app-order-list-form>
+        </mat-tab>
+        <mat-tab label="Независимости">
+            <app-order-list-form *ngIf="tabIndex === 9" [data]="'24'"
+                (onChanged)="onChanged($event)"></app-order-list-form>
+        </mat-tab>
+        <mat-tab label="Жукова">
+            <app-order-list-form *ngIf="tabIndex === 10" [data]="'32'"
+                (onChanged)="onChanged($event)"></app-order-list-form>
+        </mat-tab>
+        <mat-tab label="Экспобел">
+            <app-order-list-form *ngIf="tabIndex === 11" [data]="'34'"
+                (onChanged)="onChanged($event)"></app-order-list-form>
+        </mat-tab>
+        <mat-tab label="Горецкого">
+            <app-order-list-form *ngIf="tabIndex === 12" [data]="'35'"
+                (onChanged)="onChanged($event)"></app-order-list-form>
+        </mat-tab>
+    </mat-tab-group>
+</div>

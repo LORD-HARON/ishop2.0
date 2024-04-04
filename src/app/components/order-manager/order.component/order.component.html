@@ -1,0 +1,239 @@
+<div class="main">
+    <div class="title-conteiner">
+        <h2 class="name"> {{client.fIO}} </h2>
+        <ng-container *ngIf="client.adress === ' , , ,'">
+            <h3> Адрес: - </h3>
+        </ng-container>
+        <ng-container *ngIf="client.adress !== ' , , ,'">
+            <h3> Адрес: {{client.adress}} </h3>
+        </ng-container>
+        Заказ №{{orderBodyAnsw.num}} -
+        <text [ngSwitch]="orderBodyAnsw.name">
+            <ng-template ngSwitchCase="8"> Долгиновский </ng-template>
+            <ng-template ngSwitchCase="11"> Брест</ng-template>
+            <ng-template ngSwitchCase="22"> Каменногорская </ng-template>
+            <ng-template ngSwitchCase="25"> Молодечно </ng-template>
+            <ng-template ngSwitchCase="21"> Тимирязева </ng-template>
+            <ng-template ngSwitchCase="31"> Диамант </ng-template>
+            <ng-template ngSwitchCase="33"> Гродно </ng-template>
+            <ng-template ngSwitchCase="18">МОМО</ng-template>
+            <ng-template ngSwitchCase="24">Независимости</ng-template>
+            <ng-template ngSwitchCase="32">Жуково</ng-template>
+            <ng-template ngSwitchCase="34">Экспобел</ng-template>
+            <ng-template ngSwitchCase="35">Горецкого</ng-template>
+        </text>
+        <br>
+        Подзаказ №{{orderBodyAnsw.sub_num}}
+        <br>
+    </div>
+    <div class="title-button-conteiner">
+        <div class="btn" style="width: 70px;">
+            <button mat-stroked-button (click)="onClickPauseOrGo()" class="print"
+                [printStyle]="{ th: {'border': '1px solid black'}, td: {'border': '1px solid black'}, table: {'border-collapse': 'collapse', 'width': '100%'}}"
+                printSectionId="print-order-section" ngxPrint>
+                <span class="material-symbols-outlined" style="font-size: 30px; margin-top: 5px;">
+                    print
+                </span>
+            </button>
+        </div>
+        <div class="btn" style="width: 70px;" *ngIf="orderBodyAnsw.belPost">
+            <button mat-stroked-button (click)="openStoragePrintBarcodeDialog() ">
+                <span class="material-symbols-outlined" style="font-size: 30px; margin-top: 5px;">
+                    barcode
+                </span>
+            </button>
+        </div>
+        <div class="btn" *ngIf="orderStatus === 'не принят'" style="width: 170px;">
+            <button mat-stroked-button (click)="onClickPauseOrGo()" class="start-order">
+                Начать сборку
+            </button>
+        </div>
+    </div>
+    <div class="barcode-conteiner" *ngIf="orderBodyAnsw.belPost">
+        <span class="belpost">Штрихкод БЕЛПОЧТА:</span>
+        <div class="list-img-box">
+            <div class="img-box" *ngFor="let barcode of belpostBarcodes" (mouseenter)="selectBarcode(barcode)"
+                (mouseleave)="unSelectBarcode()">
+                <button mat-stroked-button class="bp-container" (mouseenter)="onPrintBelpost(barcode)"
+                    [printStyle]="{ th: {'border': '1px solid black'}, td: {'border': '1px solid black'}, table: {'border-collapse': 'collapse', 'width': '100%'}}"
+                    printSectionId="print-belpost-barcode-section" ngxPrint>
+                    <img [src]="imgSource + barcode" width="150" height="50">
+                </button>
+                <button mat-icon-button class="icon-close" *ngIf="selectedBarcode === barcode"
+                    (click)="belpostDelete(barcode)">
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="table-conteiner">
+        <table>
+            <tr>
+                <td *ngFor="let c of displayedColumns">
+                    {{c}}
+                </td>
+            </tr>
+            <tr *ngFor="let i of dataSource">
+                <td>
+                    {{i.article}}
+                </td>
+                <td>
+                    <ng-container *ngIf="i.foto">
+                        <img [src]="i.foto" width="100" />
+                    </ng-container>
+                    <ng-container *ngIf="!i.foto">
+                        <img src="../../../../assets/no_photo.png" width="100" />
+                    </ng-container>
+                </td>
+                <td>
+                    <a mat-list-item *ngFor="let barcode of i.barcode | split:splitElement"> {{ barcode }} </a>
+                </td>
+                <td>
+                    {{i.name}}
+                </td>
+                <td>
+                    {{i.measure}}
+                </td>
+                <td>{{i.count_e_s}}</td>
+                <td>{{i.count_e}}</td>
+                <td>
+                    <input type="text" placeholder="Введите номер заказа" [(ngModel)]="i.count_g"
+                        (input)="onInputNewCount($event.target.value, i)" (focusout)="onFocusout(i)" [min]="0"
+                        [max]="i.count_e">
+                </td>
+                <td *ngIf="isAdminIshop">
+                    <div class="btn">
+                        <a (click)="DeleteOrderItem(i.article)">Удалить</a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <mat-form-field class="example-chip-list" appearance="fill">
+            <mat-label style="size: 0.5cm;">Размещение:</mat-label>
+            <mat-chip-grid #chipList aria-label="Fruit selection">
+                <mat-chip-option *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable"
+                    (removed)="remove(fruit)">
+                    {{fruit}}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip-option>
+                <input placeholder="Добавить размещение..." #fruitInput [formControl]="fruitCtrl"
+                    [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event)">
+            </mat-chip-grid>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+                    {{fruit}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <div class="table-button-conteiner">
+            <div style="position: relative;" (mouseleave)="showCompleteDialog = false">
+                <div class="btn" *ngIf="orderStatus === 'завершен'">
+                    <a id="save" (click)="showCompleteDialog = true" class="end-order">
+                        Завершить заказ
+                    </a>
+                </div>
+                <div class="end-order-confirm-conteiner" *ngIf="showCompleteDialog">
+                    Вы точно хотите завершить заказ ?
+                    <div>
+                        <button mat-raised-button (click)="showCompleteDialog = false">Нет</button>
+                        <button mat-raised-button style="background-color: green; color: #fff; margin-left: 10px;"
+                            (click)="openCompliteDialog()">Да</button>
+                    </div>
+                </div>
+            </div>
+            <div class="btn" *ngIf="isDataChanged && orderStatus != 'Выполнен'">
+                <a id="save" (click)="onSaveChanges()" class="save-changes">
+                    Сохранить изменения
+                </a>
+            </div>
+            <div class="btn" *ngIf="isAdminIshop && completButtonStatus === false">
+                <a id="save" (click)="completOrder()" class="complete-order">
+                    Собрать заказ
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="print-barcode-section" hidden *ngIf="belPostAnsw">
+        <app-barcode-print-form [data]="belPostAnsw"></app-barcode-print-form>
+    </div>
+
+    <div id="print-belpost-barcode-section" hidden *ngIf="belpostData">
+        <app-print-belpost-barcode [data]="belpostData"></app-print-belpost-barcode>
+    </div>
+</div>
+
+
+<div id="print-order-section" hidden>
+    <h2 class="name">{{client.fIO}}</h2>
+    <ng-container *ngIf="client.adress">
+        <h3> Адрес: - </h3>
+    </ng-container>
+    <ng-container *ngIf="!client.adress">
+        <h3> Адрес: {{client.adress}} </h3>
+    </ng-container>
+    Заказ №{{orderBodyAnsw.num}} -
+    <text [ngSwitch]="orderBodyAnsw.name">
+        <ng-template ngSwitchCase="8"> Долгиновский </ng-template>
+        <ng-template ngSwitchCase="11"> Брест</ng-template>
+        <ng-template ngSwitchCase="22"> Каменногорская </ng-template>
+        <ng-template ngSwitchCase="25"> Молодечно </ng-template>
+        <ng-template ngSwitchCase="21"> Тимирязева </ng-template>
+        <ng-template ngSwitchCase="31"> Диамант </ng-template>
+        <ng-template ngSwitchCase="33"> Гродно </ng-template>
+        <ng-template ngSwitchCase="18">МОМО</ng-template>
+        <ng-template ngSwitchCase="24">Независимости</ng-template>
+        <ng-template ngSwitchCase="32">Жуково</ng-template>
+        <ng-template ngSwitchCase="34">Экспобел</ng-template>
+        <ng-template ngSwitchCase="35">Горецкого</ng-template>
+    </text>
+    <br>
+    Подзаказ №{{orderBodyAnsw.sub_num}}
+    <br>
+
+    <table style="text-align: center;">
+        <tr>
+            <td *ngFor="let pc of displayedColumnsPrint">
+                {{pc}}
+            </td>
+        </tr>
+        <tr *ngFor="let pi of dataSource">
+            <td>
+                {{pi.article}}
+                <div>
+                    <ng-container *ngIf="pi.foto">
+                        <img [src]="pi.foto" width="100" />
+                    </ng-container>
+                    <ng-container *ngIf="!pi.foto">
+                        <img src="../../../../assets/no_photo.png" width="100" />
+                    </ng-container>
+                </div>
+            </td>
+            <td>
+                <a mat-list-item *ngFor="let barcode of pi.barcode | split:splitElement"> {{ barcode }} </a>
+            </td>
+            <td>
+                {{pi.name}}
+            </td>
+            <td>
+                {{pi.measure}}
+            </td>
+            <td>{{pi.count_e_s}}</td>
+            <td>{{pi.count_e}}</td>
+            <td>{{pi.count_g}}</td>
+            <td>{{pi.price}}</td>
+        </tr>
+    </table>
+    <div style="
+        font-size: 185px;
+        position:fixed;
+        bottom:10px;
+        opacity:0.5;
+        z-index:99;
+        /* color:white; */
+        margin-left: calc(50% - 180px);">
+        {{orderBodyAnsw.num}}
+    </div>
+</div>

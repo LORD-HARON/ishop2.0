@@ -1,0 +1,22 @@
+<div class="main">
+    <span>Выберите количество штрихкодов</span>
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="selectedVal">
+        <mat-button-toggle value="1">1</mat-button-toggle>
+        <mat-button-toggle value="2">2</mat-button-toggle>
+        <mat-button-toggle value="3">3</mat-button-toggle>
+        <mat-button-toggle value="4">4</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <div class="dialog-control-conteiner">
+        <div class="btn" style="width: 170px;">
+            <button mat-stroked-button (click)="onOkClick()" [disabled]="!selectedVal">
+                Ok
+            </button>
+        </div>
+        <div class="btn" style="width: 170px;">
+            <button mat-stroked-button class="start-order" (click)="onNoClick()">
+                Отмена
+            </button>
+        </div>
+    </div>
+</div>

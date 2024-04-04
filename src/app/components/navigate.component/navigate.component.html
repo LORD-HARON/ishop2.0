@@ -1,0 +1,34 @@
+<mat-drawer-container class="drawer-container" autosize>
+    <mat-drawer #drawer class="drawer-sidenav" mode="side" [opened]="screenWidth > 1000">
+        <div class="menu">
+            <a mat-list-item [routerLink]="['ready-build']" [routerLinkActive]="['active']"
+                (click)="reload('ready-build')"><span> Готов к сборке</span> </a>
+            <a mat-list-item [routerLink]="['uncompleted']" [routerLinkActive]="['active']"
+                (click)="reload('uncompleted')"><span>Некомплект</span> </a>
+            <!-- <a mat-list-item [routerLink]="['orders/canceled']" [routerLinkActive]="['active']" (click)="reload('/orders/in-assembly')"> В сборке </a> -->
+            <a mat-list-item [routerLink]="['ready-shipment']" [routerLinkActive]="['active']"
+                (click)="reload('ready-shipment')"> <span>Готов к отгрузке</span> </a>
+            <!-- <a mat-list-item [routerLink]="['']"> Отправлен </a> -->
+            <a mat-list-item [routerLink]="['completed']" [routerLinkActive]="['active']" (click)="reload('completed')">
+                <span>Выполнен</span> </a>
+            <a mat-list-item [routerLink]="['return-to-retail']" [routerLinkActive]="['active']"
+                (click)="reload('return-to-retail')" *ngIf="isAdminIshop"><span>Вернуть в секцию</span></a>
+            <a mat-list-item [routerLink]="['canceled']" [routerLinkActive]="['active']"
+                (click)="reload('canceled')"><span> Отменен </span></a>
+            <!-- <a mat-list-item [routerLink]="['archive']" [routerLinkActive]="['active']"
+                (click)="reload('archive')"><span>Архив</span> </a> -->
+            <a mat-list-item [routerLink]="['statushistory']" [routerLinkActive]="['active']"
+                (click)="reload('statushistory')" *ngIf="isAdminIshop"> <span>История</span> </a>
+        </div>
+    </mat-drawer>
+    <div class="sidenav-content">
+        <div class="hide-nav-button">
+            <a (click)="[NavigateControl(), drawer.toggle()]">
+                <span class="material-icons">
+                    {{navigateControl}}
+                </span>
+            </a>
+        </div>
+        <router-outlet></router-outlet>
+    </div>
+</mat-drawer-container>

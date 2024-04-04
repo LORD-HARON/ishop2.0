@@ -1,0 +1,201 @@
+<ng-scrollbar #scrollable [visibility]="'hover'" style="height: 87vh; z-index: 100;">
+    <div class="table-conteiner">
+        <table>
+            <tr>
+                <td>
+                    <div class="search-adres">
+                        <label>
+                            <input type="checkbox" [(ngModel)]="isChecked" (change)="turnOnCheckColumn($event.checked)">
+                            <div class="icon">
+                                <span class="material-icons">
+                                    {{checkIcon}}
+                                </span>
+                            </div>
+                        </label>
+                    </div>
+                </td>
+                <td *ngFor="let n of selectedColumns">
+                    {{n}}
+                </td>
+            </tr>
+            <tr *ngFor="let o of orderListAnsw">
+                <td>
+                    <div class="search-adres" *ngIf="isChecked && o.status === 'не принят'">
+                        <label>
+                            <input type="checkbox" (change)="selectOrder(o)">
+                            <div class="icon">
+                                <span class="material-icons">
+                                    {{checkORderList(o)}}
+                                </span>
+                            </div>
+                        </label>
+                    </div>
+                </td>
+                <td (click)="ShowDialogDataOrder(o.id)" (mouseleave)="HideDialogDataOrder(o.id)"
+                    style="cursor: pointer; user-select: none;">
+                    <div [ngSwitch]="o.status">
+                        <ng-template ngSwitchCase="не принят">
+                            <div class="ready-collect"> готов к сборке </div>
+                        </ng-template>
+                        <ng-template ngSwitchCase="ОТЛОЖЕН">
+                            <div class="set-aside"> в сборке </div>
+                        </ng-template>
+                        <ng-template ngSwitchCase="в сборке">
+                            <div class="assembly"> в сборке </div>
+                        </ng-template>
+                        <ng-template ngSwitchCase="в паузе">
+                            <div class="shortage"> некомплект </div>
+                        </ng-template>
+                        <ng-template ngSwitchCase="завершен">
+                            <div class="ready-shipment"> готов к отгрузке </div>
+                        </ng-template>
+                        <ng-template ngSwitchCase="Заблокирован">
+                            <div class="cancel"> Отменен </div>
+                        </ng-template>
+                        <ng-template ngSwitchCase="Отправлен">
+                            <div class="return"> отправлен </div>
+                        </ng-template>
+                        <ng-template ngSwitchCase="Выполнен">
+                            <div class="complete"> Выполнен</div>
+                        </ng-template>
+                        <ng-template ngSwitchCase="Отмена">
+                            <div class="return-to-retail"> Вернуть в секцию</div>
+                        </ng-template>
+                        <div *ngIf="isActive === o.id" class="order-info-conteiner">
+                            <app-show-data-order-form [sub_order_id]="o.order.sub_num"></app-show-data-order-form>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <a [routerLink]="['/orders/order', o.order.sub_num]"> № {{o.order.num}} -
+                        <ng-container *ngIf="o.order.name"></ng-container>
+                        <a [ngSwitch]="o.order.name">
+                            <ng-template ngSwitchCase="8">Долгиновский</ng-template>
+                            <ng-template ngSwitchCase="11">Брест</ng-template>
+                            <ng-template ngSwitchCase="22">Каменногорская</ng-template>
+                            <ng-template ngSwitchCase="25">Молодечно</ng-template>
+                            <ng-template ngSwitchCase="21">Тимирязева</ng-template>
+                            <ng-template ngSwitchCase="31">Диамант</ng-template>
+                            <ng-template ngSwitchCase="33">Гродно</ng-template>
+                            <ng-template ngSwitchCase="18">МОМО</ng-template>
+                            <ng-template ngSwitchCase="24">Независимости</ng-template>
+                            <ng-template ngSwitchCase="32">Жукова</ng-template>
+                            <ng-template ngSwitchCase="34">Экспобел</ng-template>
+                            <ng-template ngSwitchCase="35">Горецкого</ng-template>
+                            <ng-template ngSwitchDefault>Тайный склад №8</ng-template>
+                        </a>
+                    </a>
+                    <br>
+                    <small class="datetime"> {{o.order.datetime}} </small>
+                    <br *ngIf="screenWidth < 1000">
+                    <small> Тип доставки: </small>
+                    <small
+                        [ngClass]="{'mileby': o.order.delivery_type === 'mileby', 'belpost' : o.order.delivery_type === 'belpost' }"
+                        *ngIf="o.order.delivery_type">
+                        {{o.order.delivery_type}}
+                    </small>
+                    <small class="samovivoz" *ngIf="!o.order.delivery_type"> самовывоз </small>
+                </td>
+                <td *ngIf="screenWidth > 1000">
+                    <div class="fio">{{o.aboutClient.fIO}}</div>
+                    <ng-container *ngIf="o.aboutClient.adress !== ' , , ,'"> <small>
+                            {{o.aboutClient.adress}} </small></ng-container>
+                </td>
+                <td *ngIf="screenWidth > 1000">
+                    {{o.aboutWoker}}
+                </td>
+                <td class="table-place">
+                    {{o.place}}
+                </td>
+                <td *ngIf="screenWidth > 1000">
+                    <a mat-list-item *ngFor="let barcode of o.info | split:splitElement"> {{ barcode }} </a>
+                </td>
+                <td>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="onClickPauseOrGo(o)" *ngIf="o.status === 'не принят'"
+                            class="standart">
+                            <mat-icon>play_arrow</mat-icon>
+                            <span>В сборку</span>
+                        </button>
+
+                        <button mat-menu-item (click)="onClickPauseOrGo(o)" *ngIf="o.status === 'ОТЛОЖЕН'"
+                            class="standart">
+                            <mat-icon>pause_circle_outline</mat-icon>
+                            <span>готов к сборке</span>
+                        </button>
+
+                        <button mat-menu-item (click)="onClickShow(o.order.sub_num)" class="standart">
+                            <mat-icon>pageview</mat-icon>
+                            <span>Просмотр</span>
+                        </button>
+
+                        <button mat-menu-item (click)="openCompliteDialog(o, 4)"
+                            *ngIf="o.order.isCassa && (o.status === 'завершен' || o.status === 'Выполнен')"
+                            [disabled]="o.order.isCassaPause" class="to-cassa">
+                            <mat-icon>move_to_inbox</mat-icon>
+                            <span>Запись в кассу</span>
+                        </button>
+
+                        <button mat-menu-item *ngIf="(o.status === 'в паузе'|| o.status === 'завершен')&& isAdminIshop"
+                            (click)="openCompliteDialog(o, 3)" class="return-ready-to-collect">
+                            <mat-icon>keyboard_return</mat-icon>
+                            <span>Вернуть в сборку</span>
+                        </button>
+                        <button mat-menu-item (click)="openCompliteDialog(o, 2)"
+                            *ngIf="(o.status === 'в паузе' || o.status === 'завершен') && isAdminIshop"
+                            [disabled]="o.order.isSendToBitrix" class="send-oms">
+                            <mat-icon>send</mat-icon>
+                            <span>Оправить в OMS</span>
+                        </button>
+                        <button mat-menu-item *ngIf="(o.status === 'Отмена')" (click)="openCompliteDialog(o, 5)"
+                            class="section-return">
+                            <mat-icon>
+                                assignment_return
+                            </mat-icon>
+                            <span>
+                                Вернуть в секцию
+                            </span>
+                        </button>
+                        <button mat-menu-item *ngIf="isAdminIshop" (click)="openCompliteDialog(o,6)"
+                            class="order-delete">
+                            <mat-icon>
+                                delete_forever
+                            </mat-icon>
+                            <span>
+                                Удалить
+                            </span>
+                        </button>
+                        <button mat-menu-item *ngIf="(o.status === 'завершен')" (click)="openCompliteDialog(o, 1)"
+                            class="section-return">
+                            <mat-icon>
+                                done
+                            </mat-icon>
+                            <span>
+                                Завершить заказ
+                            </span>
+                        </button>
+                        <button mat-menu-item
+                            *ngIf="((o.status === 'завершен'||o.status === 'Выполнен'  )|| isAdminIshop)"
+                            (click)="openInvoiceDialog(o, 1)" class="assignment">
+                            <mat-icon>
+                                assignment
+                            </mat-icon>
+                            <span>
+                                Счет-фактура
+                            </span>
+                        </button>
+                    </mat-menu>
+                </td>
+                <td *ngIf="screenWidth > 1000">
+                    <div *ngIf="o.repeatStatus === 'True'">
+                        <mat-icon style="user-select: none;">repeat</mat-icon>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</ng-scrollbar>

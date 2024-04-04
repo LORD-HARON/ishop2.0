@@ -1,0 +1,39 @@
+.main{
+    background: linear-gradient(to bottom, #0F0F0F, #222222);
+}
+
+h2{
+    color: #fff!important;
+    font-weight: bold;
+}
+.select-conteiner{
+    display: flex;
+    justify-content: space-around;
+}
+.manager-conteiner{
+    color: #fff;
+}
+.input-conteiner{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    button{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+.table-container{
+    width: 100%;
+    overflow: auto;
+    max-height: 220px;
+}
+table{
+    text-align: center;
+    width: 100%;
+    border-spacing: 0px;
+    border-collapse: collapse;
+    tr:first-child{
+        color: #fff;
+        height: 50px;
+    }
+}

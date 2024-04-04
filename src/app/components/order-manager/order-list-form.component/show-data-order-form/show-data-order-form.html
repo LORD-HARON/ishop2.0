@@ -1,0 +1,35 @@
+<table>
+    <tr>
+        <th>
+            Артикул
+        </th>
+        <th>
+
+        </th>
+        <th>
+            Наименование
+        </th>
+        <th>
+            Собранное кол-во
+        </th>
+        <th>
+            Требуемое кол-во
+        </th>
+    </tr>
+    <tr *ngFor=" let i of orderBodyAnsw">
+        <td>
+            {{i.article}}
+        </td>
+        <td>
+            <img src="{{i.foto}}" onerror="this.src='../../../../assets/no_photo.png'">
+        <td>
+            {{i.name}}
+        </td>
+        <td>
+            {{i.count_g}}
+        </td>
+        <td>
+            {{i.count_e}}
+        </td>
+    </tr>
+</table>

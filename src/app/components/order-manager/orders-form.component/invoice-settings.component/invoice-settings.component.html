@@ -1,0 +1,148 @@
+<div class="main">
+    <h2 mat-dialog-title *ngIf="selectConteiner === 1">Редактирование данных для договоров</h2>
+    <mat-dialog-content class="mat-typography">
+        <div class="select-conteiner" *ngIf="selectConteiner === 1">
+            <button mat-raised-button (click)="switchConteiner(2)">Менеджеры</button>
+            <button mat-raised-button (click)="switchConteiner(3)">Директора</button>
+        </div>
+        <div class="manager-conteiner" *ngIf="selectConteiner === 2">
+            <div class="input-conteiner">
+                <mat-form-field appearance="outline">
+                    <mat-label>ФИО</mat-label>
+                    <input matInput [(ngModel)]="manager_fio">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Должность</mat-label>
+                    <input matInput [(ngModel)]="job_title">
+                </mat-form-field>
+                <button mat-raised-button [disabled]="!manager_fio || !job_title" *ngIf="editable === false"
+                    (click)="createMangers()">
+                    Добавить
+                </button>
+                <button mat-raised-button [disabled]="!manager_fio || !job_title" *ngIf="editable === true"
+                    (click)="updateManagers()">
+                    Изменить
+                </button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th *ngFor="let h of displayedColumns">
+                            {{h}}
+                        </th>
+                    </tr>
+                    <tr *ngFor="let rows of managerList">
+                        <td>
+                            {{rows.fio}}
+                        </td>
+                        <td>
+                            {{rows.job_title}}
+                        </td>
+                        <td>
+                            <button mat-icon-button [matMenuTriggerFor]="menu">
+                                <span class="material-icons">
+                                    more_vert
+                                </span>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="switchEditable(rows.fio, rows.job_title, rows.id)"
+                                    style="color: orange;">Изменить</button>
+                                <button mat-menu-item (click)="deleteManagers(rows.id)"
+                                    style="color: red;">Удалить</button>
+                            </mat-menu>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="manager-conteiner" *ngIf="selectConteiner === 3">
+            <div class="input-conteiner">
+                <mat-form-field appearance="outline">
+                    <mat-label>ФИО</mat-label>
+                    <input matInput [(ngModel)]="director_fio">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Торговый объект</mat-label>
+                    <input matInput [(ngModel)]="storelock">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Доверенность</mat-label>
+                    <input matInput [(ngModel)]="dover">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Должность</mat-label>
+                    <input matInput [(ngModel)]="dolj">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Должность по тексту</mat-label>
+                    <input matInput [(ngModel)]="doc_dolj">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>ТО по тексту</mat-label>
+                    <input matInput [(ngModel)]="storeFullName">
+                </mat-form-field>
+                <button mat-raised-button [disabled]="!director_fio || !storelock || !dover || !doc_dolj"
+                    *ngIf="editable === false" (click)="createDirectors()">
+                    Добавить
+                </button>
+                <button mat-raised-button [disabled]="!director_fio || !storelock || !dover || !doc_dolj"
+                    *ngIf="editable === true" (click)="updateDirectors()">
+                    Изменить
+                </button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th *ngFor="let h1 of displayedColumns1">
+                            {{h1}}
+                        </th>
+                    </tr>
+                    <tr *ngFor="let rows1 of directorsList">
+                        <td>
+                            {{rows1.fio}}
+                        </td>
+                        <td>
+                            {{rows1.storeloc}}
+                        </td>
+                        <td>
+                            {{rows1.power_of_attorney}}
+                        </td>
+                        <td>
+                            {{rows1.dolj}}
+                        </td>
+                        <td>
+                            {{rows1.doc_dolj}}
+                        </td>
+                        <td>
+                            {{rows1.storeName}}
+                        </td>
+                        <td>
+                            <button mat-icon-button [matMenuTriggerFor]="menu">
+                                <span class="material-icons">
+                                    more_vert
+                                </span>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item
+                                    (click)="switchEditableDir(rows1.fio, rows1.storeloc, rows1.power_of_attorney, rows1.id, rows1.doc_dolj)"
+                                    style="color: orange;">Изменить</button>
+                                <button mat-menu-item (click)="deleteDirectors(rows1.id)"
+                                    style="color: red;">Удалить</button>
+                            </mat-menu>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button (click)="switchConteiner(2)" *ngIf="selectConteiner === 3">
+            Менеджеры
+        </button>
+        <button mat-raised-button (click)="switchConteiner(3)" *ngIf="selectConteiner === 2">
+            Директора
+        </button>
+        <button mat-button mat-dialog-close>Закрыть</button>
+    </mat-dialog-actions>
+</div>

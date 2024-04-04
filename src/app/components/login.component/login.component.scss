@@ -1,0 +1,283 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.main {
+    overflow: hidden;
+}
+section {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #0F0F0F, #222222);
+}
+// section .color {
+//     position: absolute;
+//     filter: blur(150px);
+// }
+// section .color:nth-child(1) {
+//     top: -350px;
+//     width: 600px;
+//     height: 600px;
+//     background: #ff359b;
+// }
+// section .color:nth-child(2) {
+//     bottom: -150px;
+//     width: 500px;
+//     height: 500px;
+//     background: #fffd87;
+// }
+// section .color:nth-child(3) {
+//     bottom: 50px;
+//     width: 300px;
+//     height: 300px;
+//     background: #00d2ff;
+// }
+.box {
+    position: relative;
+}
+.box .square {
+    position: absolute;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    animation: glassmorph 10s linear infinite;
+    animation-delay: calc(-1s * var(--i));
+}
+@keyframes glassmorph {
+    0%,
+    100% {
+        transform: translateY(-40px);
+    }
+    50% {
+        transform: translateY(40px);
+    }
+}
+.box .square:nth-child(1) {
+    top: -50px;
+    right: -60px;
+    width: 100px;
+    height: 100px;
+}
+
+.box .square:nth-child(2) {
+    top: 150px;
+    left: -100px;
+    width: 120px;
+    height: 120px;
+    z-index: 2;
+}
+.box .square:nth-child(3) {
+    bottom: 50px;
+    right: -60px;
+    width: 80px;
+    height: 80px;
+    z-index: 2;
+}
+.box .square:nth-child(4) {
+    bottom: -80px;
+    left: 100px;
+    width: 50px;
+    height: 50px;
+}
+.box .square:nth-child(5) {
+    top: -80px;
+    left: 140px;
+    width: 60px;
+    height: 60px;
+}
+.container {
+    position: relative;
+    width: 400px;
+    min-height: 400px;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+.form {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 40px;
+}
+
+.form h2 {
+    position: relative;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+}
+.form h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 80px;
+    height: 4px;
+    background-color: #fff;
+}
+.form .input-box {
+    width: 100%;
+    margin-top: 20px;
+    display: inline-block;
+    position: relative;
+}
+.password-button{
+    position: absolute; 
+            right: 5px; 
+            top: 5px;
+            color: #fff;
+            background-color: transparent;
+            border: 0;
+            border-radius: 50%;
+            width: 31px;
+            height: 31px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &:hover{
+                color: black;
+            }
+}
+.form .input-box input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    outline: none;
+    padding: 10px 30px 10px 25px;
+    border-radius: 35px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: #fff;
+    box-shadow: 0 5px rgba(0, 0, 0, 0.05);
+
+}
+.form .input-box input.ng-touched.ng-invalid {
+    border: 1px rgb(158, 0, 0) solid;
+    background: rgba(255, 0, 0, 0.2);
+}
+.form .input-box input::placeholder {
+    color: #fff;
+}
+.form .btn {
+    position: relative;
+    width: 155px;
+    height: 50px;
+    margin-top: 20px;
+    
+}
+.form .btn a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.01);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+    border-radius: 30px;
+    color: #fff;
+    z-index: 1;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: 0.5s;
+    backdrop-filter: blur(15px);
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+}
+.form .btn:hover a {
+    letter-spacing: 3px;
+}
+.form .btn a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0.15), transparent);
+    transform: skewX(45deg) translateX(0);
+    transition: 0.5s;
+}
+.form .btn:hover a::before {
+    transform: skewX(45deg) translateX(200%);
+}
+// .form .btn::before {
+//     content: "";
+//     position: absolute;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     bottom: -5px;
+//     width: 30px;
+//     height: 10px;
+//     background: #f00;
+//     border-radius: 10px;
+//     transition: 0.5s;
+//     transition-delay: 0s;
+// }
+.form .btn:hover::before {
+    bottom: 0;
+    height: 50%;
+    width: 80%;
+    border-radius: 30px;
+    transition-delay: 0.5s;
+}
+
+// .form .btn::after {
+//     content: "";
+//     position: absolute;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     top: -5px;
+//     width: 30px;
+//     height: 10px;
+//     background: #f00;
+//     border-radius: 10px;
+//     transition: 0.5s;
+//     transition-delay: 0s;
+// }
+.form .btn:hover::after {
+    top: 0;
+    height: 50%;
+    width: 80%;
+    border-radius: 30px;
+    transition-delay: 0.5s;
+}
+
+
+
+.forget {
+    color: #fff;
+    margin-top: 5px;
+}
+.forget a {
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-left: 5px;
+}

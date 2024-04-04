@@ -1,0 +1,75 @@
+<div *ngIf="dialogType === 1" class="dialog-conteiner">
+    <h3 mat-dialog-title>Завершить заказ</h3>
+    <div mat-dialog-content class="mat-typography">
+        Вы действительно хотите завершить заказ
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button [mat-dialog-close]="null">НЕТ</button>
+        <button mat-raised-button style="background: green; color: white;" (click)="onColickCompleteOrder()"
+            [disabled]="disableButton === true">Завершить</button>
+    </div>
+</div>
+
+
+<div *ngIf="dialogType === 2" class="dialog-conteiner">
+    <h3 mat-dialog-title>Отправить в OMS</h3>
+    <div mat-dialog-content class="mat-typography">
+        Вы действительно хотите отправить заказ в OMS
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button [mat-dialog-close]="null">НЕТ</button>
+        <button mat-raised-button style="background: rgb(255, 166, 0); color: white;" (click)="onClickSendToBitrix()"
+            [disabled]="disableButton === true">Отправить</button>
+    </div>
+</div>
+
+
+<div *ngIf="dialogType === 3" class="dialog-conteiner">
+    <h3 mat-dialog-title>Вернуть в сборку</h3>
+    <div mat-dialog-content class="mat-typography">
+        Вы действительно хотите вернуть заказ в сборку
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button [mat-dialog-close]="null">НЕТ</button>
+        <button mat-raised-button style="background: #78FFFF; color: black;" (click)="onClickReturnToAssembly()"
+            [disabled]="disableButton === true">Вернуть</button>
+    </div>
+</div>
+
+
+
+<div *ngIf="dialogType === 4" class="dialog-conteiner">
+    <h3 mat-dialog-title>Записать в кассу</h3>
+    <div mat-dialog-content class="mat-typography">
+        Вы действительно хотите записать заказ в кассу
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button [mat-dialog-close]="null">НЕТ</button>
+        <button mat-raised-button style="background: rgba(65, 155, 38, 0.877); color: white;"
+            (click)="onClickWriteToCashbox()" [disabled]="disableButton === true">Записать</button>
+    </div>
+</div>
+
+<div *ngIf="dialogType === 5" class="dialog-conteiner">
+    <h3 mat-dialog-title>Заказ возвращен в секицию</h3>
+    <div mat-dialog-content class="mat-typography">
+        Вы действительно вернули заказ в секцию
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button [mat-dialog-close]="null">НЕТ</button>
+        <button mat-raised-button style="background: green; color: white;" (click)="onClickReturnToRetail()"
+            [disabled]="disableButton === true">Возвращен</button>
+    </div>
+</div>
+
+<div *ngIf="dialogType === 6" class="dialog-conteiner">
+    <h3 mat-dialog-title>Удалить заказ</h3>
+    <div mat-dialog-content class="mat-typography">
+        Вы действительно хотите удалить заказ
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button [mat-dialog-close]="null">НЕТ</button>
+        <button mat-raised-button style="background: red; color: white;" (click)="onDelete()"
+            [disabled]="disableButton === true">УДАЛИТЬ</button>
+    </div>
+</div>

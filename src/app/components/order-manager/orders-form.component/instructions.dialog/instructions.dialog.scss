@@ -1,0 +1,19 @@
+mat-dialog-content{
+    overflow: auto;
+    max-height: 628px;
+}
+.main{
+    background: linear-gradient(to bottom, #0F0F0F, #222222);
+
+}
+a{
+    text-decoration: none;
+    color: #fff;
+    &:hover{
+        text-shadow: gold 1px 0 10px;
+    }
+}
+h2{
+    color: #fff!important;
+    font-weight: bold;
+}

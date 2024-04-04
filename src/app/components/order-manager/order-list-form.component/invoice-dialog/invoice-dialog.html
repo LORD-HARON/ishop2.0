@@ -1,0 +1,39 @@
+<div class="control-conteiner" *ngIf="dialogType === 1">
+    <div class="buttons">
+        <mat-form-field appearance="outline">
+            <mat-label>Срок действия</mat-label>
+            <mat-select [(value)]="selectedDaysCount">
+                <mat-option *ngFor="let days of daysCount" [value]="days">
+                    {{days}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Ответственный</mat-label>
+            <mat-select [(value)]="selectedManager">
+                <mat-option *ngFor="let manag of ManagerList" [value]="manag">
+                    {{manag.fio}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" class="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <div class="btn" style="width: 210px; margin-top: 7px;">
+            <button mat-raised-button (click)="showInvoice()"
+                [disabled]="!selectedDaysCount || !selectedDate || !selectedManager">
+                Сформировать
+            </button>
+        </div>
+    </div>
+    <iframe id="report" height="96%" width="835px" [src]="url | safeUrl" *ngIf="showIFrame === true"></iframe>
+    <div mat-dialog-actions class="dialog-action" align="end">
+        <div class="btn" style="width: 210px;">
+            <button mat-button cdkFocusInitial [mat-dialog-close]="null">Закрыть</button>
+        </div>
+    </div>
+</div>
