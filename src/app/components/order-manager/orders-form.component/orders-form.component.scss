@@ -95,6 +95,7 @@
     .search-adres{
         width: 40px;
         margin-left: 10px;
+        margin-right: 5px;
         label {
             position: relative;
             width: 1px!important;
@@ -292,6 +293,9 @@
 
 @media screen and (max-width: 1000px){
     .main{
-        width: 120%;
+        width: 140%;
+    }
+    input{
+        width: 160px;
     }
 }

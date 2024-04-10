@@ -16,6 +16,7 @@ import { BelPostAnsw } from "../models/order.models/belpost-answ";
 import { Changer } from "../models/order.models/changer";
 import { DelPostRequest } from "../models/order.models/del-post-req";
 import { DeleteItemModel } from "../models/order.models/delete-item";
+import { CheckByArticleModel } from "../models/order.models/check-by-article-model";
 
 @Injectable({
     providedIn: 'root'
@@ -42,6 +43,8 @@ export class OrderService {
     urlGetHistoryByDate = this.urlOrder + '/statusHistoryByDate/';
     urlGetHistoryByOrder = this.urlOrder + '/GetHistoryByOrder/';
     urlDeleteOrderItem = this.urlOrder + '/deleteItem/'
+    urlCheckArticle = this.urlOrder + '/CheckArticle/'
+
     constructor(private http: HttpClient) { }
 
     getOrders(data: OrderListReq): Observable<Array<OrderListAnsw>> {
@@ -112,5 +115,8 @@ export class OrderService {
     }
     orderDeleteItem(data: DeleteItemModel): Observable<Status> {
         return this.http.post<Status>(this.urlDeleteOrderItem, data)
+    }
+    CheckArticle(data: CheckByArticleModel): Observable<Status> {
+        return this.http.post<Status>(this.urlCheckArticle, data)
     }
 }

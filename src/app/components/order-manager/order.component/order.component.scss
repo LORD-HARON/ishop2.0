@@ -73,6 +73,17 @@
             }
             .btn{
                 width: 110px;
+                .scan{
+                    color: goldenrod;
+                    span{
+                        font-size: 30px;
+                    }
+                    
+                    &:hover{
+                        color: #fff;
+                        text-shadow: goldenrod 1px 0 10px;
+                    }
+                }
             }
             .btn a{
                 color: red;
@@ -276,4 +287,9 @@
         }
     }
 }
+}
+
+
+@media screen and (max-width: 1000px){
+
 }

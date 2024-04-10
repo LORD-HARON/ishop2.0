@@ -1,0 +1,18 @@
+<div class="main">
+    <input type="text" placeholder="Отсканируйте штрихкод" *ngIf="showCountInput == false" (input)="inputHandle($event)"
+        [(ngModel)]="barcode">
+    <div class="count-change" *ngIf="showCountInput == true">
+        <span>На складе</span>
+        <span>{{dataSource.count_e_s}}</span>
+        <span>Требуемое количество</span>
+        <span>{{dataSource.count_e}}</span>
+        <span>Собранное количество</span>
+        <input type="text" placeholder="Введите количество" [(ngModel)]="dataSource.count_g" [min]="0"
+            [max]="dataSource.count_e" (input)="onInputNewCount($event.target.value)">
+        <div style="padding: 10px;">
+            <button mat-raised-button (click)="OnCancel()">Отмена</button>
+            <button mat-raised-button (click)="OnSave()">Сохранить изменения</button>
+        </div>
+    </div>
+
+</div>

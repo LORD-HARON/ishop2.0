@@ -23,6 +23,8 @@ import { PauseOrderReq } from "src/app/models/order.models/pause-order-req";
 import { DeleteItemModel } from "src/app/models/order.models/delete-item";
 import { DelPostRequest } from "src/app/models/order.models/del-post-req";
 import { MatIconRegistry } from "@angular/material/icon";
+import { AdaptiveService } from "src/app/services/adaptive.service";
+import { CheckByArticleModel } from "src/app/models/order.models/check-by-article-model";
 
 export interface BelpostData {
     barcode: string,
@@ -80,7 +82,8 @@ export class OrderComponent implements OnInit {
         private orderService: OrderService,
         private tokenService: TokenService,
         private snackbarService: SnackbarService,
-        private matIconReg: MatIconRegistry
+        private matIconReg: MatIconRegistry,
+        private adaptiveService: AdaptiveService
     ) {
         this.orderId = route.snapshot.params['id'];
 
@@ -125,7 +128,9 @@ export class OrderComponent implements OnInit {
         return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
     }
     completButtonStatus: boolean = true;
+    screenWidth: number
     ngOnInit(): void {
+        this.screenWidth = this.adaptiveService.GetCurrentWidth()
         this.matIconReg.setDefaultFontSetClass('material-symbols-outlined');
         // this.titleService.setTitle(this.titleService.getTitle() + ' №' + this.orderId);
         let orderBodyReq = new OrderBodyReq(this.tokenService.getToken(), this.orderId)
@@ -481,6 +486,28 @@ export class OrderComponent implements OnInit {
             }
         });
     }
+    openOderCheckDialog(element: OrderBody) {
+        const dialogRef = this.dialog.open(OrderCheckBarcodeDialogComponent, {
+            data: { element },
+        });
+        dialogRef.afterClosed().subscribe({
+            next: result => {
+                if (result) {
+                    this.dataSource.forEach(element => {
+                        if (element.article == result.article) {
+                            element = result
+                        }
+                    })
+                    console.log(this.dataSource);
+                    this.onSaveChanges()
+                }
+            },
+            error: error => {
+                console.log(error);
+                this.snackbarService.openRedSnackBar()
+            }
+        })
+    }
 }
 
 @Component({
@@ -506,5 +533,81 @@ export class BarcodeInputCountDialogComponent implements OnInit {
     onOkClick() {
         if (+this.selectedVal >= 1 && +this.selectedVal <= 4)
             this.dialogRef.close(+this.selectedVal);
+    }
+}
+
+@Component({
+    selector: 'app-order-check-barcode-dialog',
+    templateUrl: './order-dialog/order-check-barcode.dialog/order-check-barcode.dialog.html',
+    styleUrls: ['./order-dialog/order-check-barcode.dialog/order-check-barcode.dialog.scss']
+})
+export class OrderCheckBarcodeDialogComponent implements OnInit {
+    constructor(
+        private orderService: OrderService,
+        private tokenService: TokenService,
+        private snackBarService: SnackbarService,
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        public dialogRef: MatDialogRef<OrderCheckBarcodeDialogComponent>,
+
+    ) { }
+    isDataChanged = false;
+    dataSource: OrderBody
+    ngOnInit(): void {
+        this.dataSource = this.data.element
+        console.log(this.dataSource.count_e)
+    }
+    showCountInput: boolean = false
+    barcode: string
+    inputHandle(event) {
+        var number = event.target.value;
+        if (number.length >= 13) {
+            this.checkBarcode()
+        }
+    }
+    onInputNewCount(event: string): void {
+        if (event.length >= 0) {
+            this.dataSource.count_g = event;
+            this.dataSource.changed = true;
+            this.isDataChanged = this.checkDataChanged();
+            if (+this.dataSource.count_g > +this.dataSource.count_e)
+                this.dataSource.count_g = this.dataSource.count_e;
+            if (!this.dataSource.count_g)
+                this.dataSource.count_g = '0';
+        }
+    }
+    checkDataChanged(): boolean {
+        return this.dataSource.changed === true ? true : false
+    }
+    checkBarcode() {
+        this.orderService.CheckArticle(new CheckByArticleModel(this.tokenService.getToken(), this.barcode, this.data.element.article)).subscribe({
+            next: result => {
+                switch (result.status) {
+                    case "true":
+                        this.showCountInput = true
+                        break;
+                    case "null":
+                        this.showCountInput = false
+                        this.snackBarService.openRedSnackBar("Не найден")
+                        break;
+                    case "BadAuth":
+                        this.showCountInput = false
+                        this.snackBarService.openRedSnackBar("Не верный токен")
+                        break;
+                    case "error":
+                        this.showCountInput = false
+                        this.snackBarService.openRedSnackBar()
+                        break;
+                }
+            },
+            error: error => {
+                console.log(error);
+            }
+        })
+    }
+    OnSave() {
+        this.dialogRef.close(this.dataSource)
+    }
+    OnCancel() {
+        this.dialogRef.close()
     }
 }

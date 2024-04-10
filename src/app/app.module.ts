@@ -25,7 +25,7 @@ import { InvoiceDialogComponent } from './components/order-manager/order-list-fo
 import { ShowDataOrderForm } from './components/order-manager/order-list-form.component/order-list-form.component';
 import { SafeUrlPipe } from './pipes/safeUrl.pipe';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
-import { OrderComponent } from './components/order-manager/order.component/order.component';
+import { OrderCheckBarcodeDialogComponent, OrderComponent } from './components/order-manager/order.component/order.component';
 import { NgxPrintModule } from 'ngx-print';
 import { BarcodePrintFormComponent } from './components/order-manager/order.component/barcode-prints/barcode-print-form.component/barcode-print-form.component';
 import { PrintBelpostBarcodeComponent } from './components/order-manager/order.component/barcode-prints/print-belpost-barcode.component/print-belpost-barcode.component';
@@ -33,6 +33,7 @@ import { trueStatus } from './pipes/translateShitStatus.pipe';
 import { InstructionDialogComponent } from './components/order-manager/orders-form.component/orders-form.component';
 import { InvoiseSettingsComponent } from './components/order-manager/orders-form.component/invoice-settings.component/invoice-settings.component';
 import { BarcodeInputCountDialogComponent } from './components/order-manager/order.component/order.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +60,8 @@ import { BarcodeInputCountDialogComponent } from './components/order-manager/ord
     trueStatus,
     InstructionDialogComponent,
     InvoiseSettingsComponent,
-    BarcodeInputCountDialogComponent
+    BarcodeInputCountDialogComponent,
+    OrderCheckBarcodeDialogComponent
   ],
   imports: [
     BrowserModule,

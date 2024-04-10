@@ -18,6 +18,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTableModule } from '@angular/material/table'
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 @NgModule({
     declarations: [
     ],
@@ -43,7 +44,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
         MatChipsModule,
         MatAutocompleteModule,
         MatTableModule,
-        MatButtonToggleModule
+        MatButtonToggleModule,
+        MatCheckboxModule
     ]
 })
 export class AppMaterialsModule { }

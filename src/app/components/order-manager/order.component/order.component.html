@@ -59,7 +59,7 @@
                     printSectionId="print-belpost-barcode-section" ngxPrint>
                     <img [src]="imgSource + barcode" width="150" height="50">
                 </button>
-                <button mat-icon-button class="icon-close" *ngIf="selectedBarcode === barcode"
+                <button mat-icon-button class="icon-close" *ngIf="selectedBarcode === barcode || screenWidth < 1000"
                     (click)="belpostDelete(barcode)">
                     <mat-icon>cancel</mat-icon>
                 </button>
@@ -99,10 +99,18 @@
                 <td>
                     <input type="text" placeholder="Введите номер заказа" [(ngModel)]="i.count_g"
                         (input)="onInputNewCount($event.target.value, i)" (focusout)="onFocusout(i)" [min]="0"
-                        [max]="i.count_e">
+                        [max]="i.count_e" *ngIf="screenWidth > 1000">
+                    <span *ngIf="screenWidth < 1000">{{i.count_g}}</span>
                 </td>
-                <td *ngIf="isAdminIshop">
-                    <div class="btn">
+                <td>
+                    <div class="btn" *ngIf="screenWidth < 1000">
+                        <button (click)="openOderCheckDialog(i)" class="scan">
+                            <span class="material-symbols-outlined">
+                                barcode_scanner
+                            </span>
+                        </button>
+                    </div>
+                    <div class="btn" *ngIf="isAdminIshop">
                         <a (click)="DeleteOrderItem(i.article)">Удалить</a>
                     </div>
                 </td>

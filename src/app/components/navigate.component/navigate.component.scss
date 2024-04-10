@@ -142,3 +142,11 @@ background: linear-gradient(to bottom, #0F0F0F, #222222);
 mat-nav-list {
     width: 15vw;
 }
+
+@media screen and (max-width: 1000px){
+    .material-icons{
+        color: #fff!important;
+        text-shadow: 0 0 15px #fff, 0 0 25px #fff!important;
+        animation: none!important;
+    }
+}

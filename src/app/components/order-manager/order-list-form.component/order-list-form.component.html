@@ -4,7 +4,9 @@
             <tr>
                 <td>
                     <div class="search-adres">
-                        <label>
+                        <mat-checkbox *ngIf="screenWidth < 1000" [(ngModel)]="isChecked"
+                            (change)="turnOnCheckColumn($event.checked)"></mat-checkbox>
+                        <label *ngIf="screenWidth > 1000">
                             <input type="checkbox" [(ngModel)]="isChecked" (change)="turnOnCheckColumn($event.checked)">
                             <div class="icon">
                                 <span class="material-icons">
@@ -20,8 +22,11 @@
             </tr>
             <tr *ngFor="let o of orderListAnsw">
                 <td>
+
                     <div class="search-adres" *ngIf="isChecked && o.status === 'не принят'">
-                        <label>
+                        <mat-checkbox *ngIf="screenWidth < 1000" (change)="selectOrder(o)"></mat-checkbox>
+                        <label *ngIf="screenWidth > 1000">
+
                             <input type="checkbox" (change)="selectOrder(o)">
                             <div class="icon">
                                 <span class="material-icons">
