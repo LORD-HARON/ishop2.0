@@ -1,15 +1,20 @@
 mat-dialog-content{
     overflow: auto;
     max-height: 628px;
+    display: flex;
+    flex-direction: column;
 }
 .main{
     background: linear-gradient(to bottom, #0F0F0F, #222222);
 
 }
 a{
+    margin-top: 10px;
+    margin-left: 10px;
     text-decoration: none;
-    color: #fff;
+    color: gold;
     &:hover{
+        color: #fff;
         text-shadow: gold 1px 0 10px;
     }
 }
