@@ -37,7 +37,7 @@
                     </div>
                 </td>
                 <td (click)="ShowDialogDataOrder(o.id)" (mouseleave)="HideDialogDataOrder(o.id)"
-                    style="cursor: pointer; user-select: none;">
+                    style="cursor: pointer;">
                     <div [ngSwitch]="o.status">
                         <ng-template ngSwitchCase="не принят">
                             <div class="ready-collect"> готов к сборке </div>

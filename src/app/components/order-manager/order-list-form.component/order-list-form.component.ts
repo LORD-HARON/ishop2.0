@@ -111,7 +111,6 @@ export class OrderListFormComponent implements OnInit {
         this.selectedColumns = this.screenWidth > 1000 ? this.displayedColumns : this.displayedTsdColumns
         this.loadData(this.searchValue);
         this.isAdminIshop = this.tokenService.getTitle() == ('ishopAdmin' && 'dev') ? true : false
-        console.log(this.isAdminIshop);
     }
     loadData(value) {
         if (!value) {
@@ -401,10 +400,6 @@ export class OrderListFormComponent implements OnInit {
                 this.snackbarService.openRedSnackBar();
             }
         });
-    }
-
-    getAdminIshop(): boolean {
-        return environment.listAdminsIshop.includes(this.tokenService.getLogin().toLowerCase());
     }
 
     onClickSendToBitrix(element: OrderListAnsw) {

@@ -1,4 +1,9 @@
 <div class="main">
+    <div class="btn" style="width: 90px; margin-top: 10px;" *ngIf="screenWidth < 1000">
+        <button mat-stroked-button class="start-order" (click)="back()">
+            Назад
+        </button>
+    </div>
     <div class="title-conteiner">
         <h2 class="name"> {{client.fIO}} </h2>
         <ng-container *ngIf="client.adress === ' , , ,'">

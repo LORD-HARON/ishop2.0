@@ -83,7 +83,7 @@ export class OrderComponent implements OnInit {
         private tokenService: TokenService,
         private snackbarService: SnackbarService,
         private matIconReg: MatIconRegistry,
-        private adaptiveService: AdaptiveService
+        private adaptiveService: AdaptiveService,
     ) {
         this.orderId = route.snapshot.params['id'];
 
@@ -146,7 +146,7 @@ export class OrderComponent implements OnInit {
             }
         });
         this.userName = this.tokenService.getLogin();
-        this.isAdminIshop = this.getAdminIshop();
+        this.isAdminIshop = this.tokenService.getTitle() == ('ishopAdmin' || 'dev') ? true : false
     }
     completOrder() {
         this.dataSource.forEach(i => {
@@ -154,9 +154,6 @@ export class OrderComponent implements OnInit {
         })
         this.completButtonStatus = false
         this.isDataChanged = true
-    }
-    getAdminIshop(): boolean {
-        return environment.listAdminsIshop.includes(this.tokenService.getLogin().toLowerCase());
     }
     selectBarcode(barcode: any) {
         this.selectedBarcode = barcode;
@@ -508,6 +505,9 @@ export class OrderComponent implements OnInit {
             }
         })
     }
+    back() {
+        this.router.navigate(['/']);
+    }
 }
 
 @Component({
@@ -610,4 +610,5 @@ export class OrderCheckBarcodeDialogComponent implements OnInit {
     OnCancel() {
         this.dialogRef.close()
     }
+
 }

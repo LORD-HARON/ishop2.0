@@ -49,8 +49,7 @@ export class OrdersFormComponent implements OnInit {
                 this.timerValue = 120;
             }
         }, 1000);
-        this.isAdminIshop = this.tokenService.getTitle() == ('ishopAdmin' && 'dev') ? true : false
-
+        this.isAdminIshop = this.tokenService.getTitle() == ('ishopAdmin' || 'dev') ? true : false
     }
     ngOnDestroy() {
         clearInterval(this.intervalId);

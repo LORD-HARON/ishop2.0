@@ -22,11 +22,9 @@ export class NavigateComponent {
     ngOnInit(): void {
         this.screenWidth = this.adaptiveService.GetCurrentWidth()
         this.navigateControl = this.screenWidth > 1000 ? 'keyboard_double_arrow_left' : 'keyboard_double_arrow_right'
-        this.isAdminIshop = this.getAdminIshop()
+        this.isAdminIshop = this.tokenService.getTitle() == ('ishopAdmin' || 'dev') ? true : false
     }
-    getAdminIshop(): boolean {
-        return environment.listAdminsIshop.includes(this.tokenService.getLogin().toLowerCase());
-    }
+
     reload(url: string): void {
         if (this.router.url === url)
             this.router.navigate(['empty'], { state: { url: url } });
