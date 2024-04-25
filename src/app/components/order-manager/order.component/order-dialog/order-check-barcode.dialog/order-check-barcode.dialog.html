@@ -1,6 +1,6 @@
 <div class="main">
-    <input type="text" placeholder="Отсканируйте штрихкод" *ngIf="showCountInput == false" (input)="inputHandle($event)"
-        [(ngModel)]="barcode">
+    <input id="inputBarcode" type="text" placeholder="Отсканируйте штрихкод" *ngIf="showCountInput == false"
+        (input)="inputHandle($event)" [(ngModel)]="barcode">
     <div class="count-change" *ngIf="showCountInput == true">
         <span>На складе</span>
         <span>{{dataSource.count_e_s}}</span>

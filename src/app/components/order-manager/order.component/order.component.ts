@@ -581,6 +581,8 @@ export class OrderCheckBarcodeDialogComponent implements OnInit {
     checkBarcode() {
         this.orderService.CheckArticle(new CheckByArticleModel(this.tokenService.getToken(), this.barcode, this.data.element.article)).subscribe({
             next: result => {
+                var inputBarcode = document.getElementById('inputBarcode')
+                inputBarcode?.blur()
                 switch (result.status) {
                     case "true":
                         this.showCountInput = true
