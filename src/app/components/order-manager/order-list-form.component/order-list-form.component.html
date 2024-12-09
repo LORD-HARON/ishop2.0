@@ -22,7 +22,6 @@
             </tr>
             <tr *ngFor="let o of orderListAnsw">
                 <td>
-
                     <div class="search-adres" *ngIf="isChecked && o.status === 'не принят'">
                         <mat-checkbox *ngIf="screenWidth < 1000" (change)="selectOrder(o)"></mat-checkbox>
                         <label *ngIf="screenWidth > 1000">

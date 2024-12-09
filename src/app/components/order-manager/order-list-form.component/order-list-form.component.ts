@@ -112,7 +112,9 @@ export class OrderListFormComponent implements OnInit {
         this.isAdminIshop = this.tokenService.getTitle() == 'ishopAdmin' ? true : false
     }
     loadData(value) {
-        if (!value) {
+        if (value == null) {
+
+
             let orderListReq = new OrderListReq(this.tokenService.getToken(), this.data ?? '%', this.getStatus() ?? 'gs', this.countRecord.toString());
             this.orderService.getOrders(orderListReq).subscribe({
                 next: response => {

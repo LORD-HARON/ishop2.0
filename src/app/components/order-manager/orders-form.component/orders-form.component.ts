@@ -56,6 +56,7 @@ export class OrdersFormComponent implements OnInit {
     }
 
     selectedTab($event) {
+
         this.tabIndex = $event.index;
         localStorage.setItem('tabIndex', String(this.tabIndex));
         if (this.searchNumOrder)
