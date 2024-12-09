@@ -18,6 +18,7 @@ const childRoutes: Routes = [
   { path: 'ready-build', component: OrderReadyBuildComponent, canActivate: [loginGuard] },
   { path: 'uncompleted', component: OrderUncompletedComponent, canActivate: [loginGuard] },
   { path: 'ready-shipment', component: OrderReadyShipmentComponent, canActivate: [loginGuard] },
+  { path: 'sent', component: OrderReadyShipmentComponent, canActivate: [loginGuard] },
   { path: 'return-to-retail', component: OrderReturnToRetailComponent, canActivate: [loginGuard] },
   { path: 'canceled', component: OrderCanceledComponent, canActivate: [loginGuard] },
   { path: 'completed', component: OrderCompletedComponent, canActivate: [loginGuard] },

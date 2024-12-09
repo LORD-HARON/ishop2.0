@@ -33,7 +33,7 @@ import { trueStatus } from './pipes/translateShitStatus.pipe';
 import { InstructionDialogComponent } from './components/order-manager/orders-form.component/orders-form.component';
 import { InvoiseSettingsComponent } from './components/order-manager/orders-form.component/invoice-settings.component/invoice-settings.component';
 import { BarcodeInputCountDialogComponent } from './components/order-manager/order.component/order.component';
-
+import { OrderSentComponent } from './components/order-manager/order-types/order-sent.component/order-sent.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +61,8 @@ import { BarcodeInputCountDialogComponent } from './components/order-manager/ord
     InstructionDialogComponent,
     InvoiseSettingsComponent,
     BarcodeInputCountDialogComponent,
-    OrderCheckBarcodeDialogComponent
+    OrderCheckBarcodeDialogComponent,
+    OrderSentComponent
   ],
   imports: [
     BrowserModule,

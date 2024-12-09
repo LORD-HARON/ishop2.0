@@ -7,8 +7,8 @@ import { BelPostAnsw } from "src/app/models/order.models/belpost-answ";
 })
 export class BarcodePrintFormComponent implements OnInit {
     @Input() data: BelPostAnsw;
-    imgSource = 'https://barcode.tec-it.com/barcode.ashx?data=';
-
+    // imgSource = 'https://barcode.tec-it.com/barcode.ashx?data=';
+    imgSource = 'https://barcodeapi.org/api/auto/'
     constructor() { }
 
     ngOnInit(): void {

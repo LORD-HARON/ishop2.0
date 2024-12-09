@@ -19,7 +19,6 @@
             <ng-template ngSwitchCase="22"> Каменногорская </ng-template>
             <ng-template ngSwitchCase="25"> Молодечно </ng-template>
             <ng-template ngSwitchCase="21"> Тимирязева </ng-template>
-            <ng-template ngSwitchCase="31"> Диамант </ng-template>
             <ng-template ngSwitchCase="33"> Гродно </ng-template>
             <ng-template ngSwitchCase="18">МОМО</ng-template>
             <ng-template ngSwitchCase="24">Независимости</ng-template>
@@ -183,7 +182,9 @@
     <h2 class="name">{{client.fIO}}</h2>
     <ng-container *ngIf="client.adress">
         <h3> Адрес: - </h3>
+
     </ng-container>
+    <span>Тип доставки </span>
     <ng-container *ngIf="!client.adress">
         <h3> Адрес: {{client.adress}} </h3>
     </ng-container>
@@ -194,7 +195,6 @@
         <ng-template ngSwitchCase="22"> Каменногорская </ng-template>
         <ng-template ngSwitchCase="25"> Молодечно </ng-template>
         <ng-template ngSwitchCase="21"> Тимирязева </ng-template>
-        <ng-template ngSwitchCase="31"> Диамант </ng-template>
         <ng-template ngSwitchCase="33"> Гродно </ng-template>
         <ng-template ngSwitchCase="18">МОМО</ng-template>
         <ng-template ngSwitchCase="24">Независимости</ng-template>
@@ -202,6 +202,7 @@
         <ng-template ngSwitchCase="34">Экспобел</ng-template>
         <ng-template ngSwitchCase="35">Горецкого</ng-template>
     </text>
+
     <br>
     Подзаказ №{{orderBodyAnsw.sub_num}}
     <br>

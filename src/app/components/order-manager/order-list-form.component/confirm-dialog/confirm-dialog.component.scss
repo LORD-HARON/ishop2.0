@@ -135,10 +135,17 @@
     }
 }
 .order-to-cassa{
-    color: rgba(65, 155, 38, 0.877)!important;
+    color: #B8F171!important;
     &:hover{
         color: #fff!important;
-        text-shadow: rgba(65, 155, 38, 0.877) 1px 0 10px;
+        text-shadow: #B8F171 1px 0 10px;
+    }
+}
+.order-to-programm-cassa{
+    color: #FB0070!important;
+    &:hover{
+        color: #fff!important;
+        text-shadow: #FB0070 1px 0 10px;
     }
 }
 .delete{

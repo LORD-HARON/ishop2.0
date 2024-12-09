@@ -12,6 +12,5 @@ export class OrderBodyAnsw {
         public aboutClient: ClientInfo,
         public body: Array<OrderBody>,
         public place: string[],
-
     ) { }
 }

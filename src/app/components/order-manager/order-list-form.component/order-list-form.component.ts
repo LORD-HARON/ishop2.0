@@ -43,21 +43,20 @@ export class OrderListFormComponent implements OnInit {
         { index: 0, id: '%' },
         { index: 1, id: '8' },
         { index: 2, id: '22' },
-        { index: 3, id: '31' },
-        { index: 4, id: '33' },
-        { index: 5, id: '11' },
-        { index: 6, id: '25' },
-        { index: 7, id: '31' },
-        { index: 8, id: '18' },
-        { index: 9, id: '24' },
-        { index: 10, id: '32' },
-        { index: 11, id: '34' },
-        { index: 12, id: '35' }
+        { index: 3, id: '33' },
+        { index: 4, id: '11' },
+        { index: 5, id: '25' },
+        { index: 6, id: '18' },
+        { index: 7, id: '24' },
+        { index: 8, id: '32' },
+        { index: 9, id: '34' },
+        { index: 10, id: '35' }
     ];
     listStatus: Array<any> = [
         { path: '/orders/ready-build', status: 'gs' },
         { path: '/orders/uncompleted', status: 'ns' },
         { path: '/orders/ready-shipment', status: 'rs' },
+        { path: '/orders/sent', status: 'se' },
         { path: '/orders/canceled', status: 'ob' },
         { path: '/orders/return-to-retail', status: 'os' },
         { path: '/orders/archive', status: 'as' },
@@ -110,7 +109,7 @@ export class OrderListFormComponent implements OnInit {
         this.screenWidth = this.adaptive.GetCurrentWidth()
         this.selectedColumns = this.screenWidth > 1000 ? this.displayedColumns : this.displayedTsdColumns
         this.loadData(this.searchValue);
-        this.isAdminIshop = this.tokenService.getTitle() == ('ishopAdmin' && 'dev') ? true : false
+        this.isAdminIshop = this.tokenService.getTitle() == 'ishopAdmin' ? true : false
     }
     loadData(value) {
         if (!value) {
@@ -468,6 +467,12 @@ export class OrderListFormComponent implements OnInit {
                 case 'Cassa':
                     this.snackbarService.openSnackGreenBar('Заказ отправлен в кассу');
                     break;
+                case 'Prog-Cassa':
+                    this.snackbarService.openSnackGreenBar('Заказ отправлен в прог. кассу');
+                    break;
+                case 'Prog-Cassa-false':
+                    this.snackbarService.openRedSnackBar('Заказ не отправлен в прог. кассу');
+                    break
                 case 'Complete':
                     this.snackbarService.openSnackGreenBar('Заказ завершен');
                     break;
@@ -483,6 +488,7 @@ export class OrderListFormComponent implements OnInit {
                 case 'null':
                     this.snackbarService.openRedSnackBar('Некоректный запрос');
                     break;
+
                 case 'delete':
                     this.snackbarService.openSnackGreenBar('Заказ удален')
                     break;
@@ -614,6 +620,32 @@ export class ConfirmDialogComponent {
                 switch (response.status) {
                     case 'true':
                         this.dialogRef.close('Cassa')
+                        break
+                    case 'error':
+                        this.dialogRef.close('error')
+                        break;
+                    case 'BadAuth':
+                        this.dialogRef.close('BadAuth')
+                        break
+                }
+            },
+            error: error => {
+                console.log(error);
+                this.dialogRef.close('error');
+            }
+        });
+    }
+    onClickWriteToProgrammCassa(element: OrderListAnsw = this.data.element) {
+        this.disableButton = true;
+        let toCassa = new ToCassa(this.tokenService.getToken(), element.order.num, element.order.sub_num);
+        this.orderService.orderToProgrammCassa(toCassa).subscribe({
+            next: response => {
+                switch (response.status) {
+                    case 'true':
+                        this.dialogRef.close('Prog-Cassa')
+                        break
+                    case 'false':
+                        this.dialogRef.close('Prog-Cassa-false')
                         break
                     case 'error':
                         this.dialogRef.close('error')

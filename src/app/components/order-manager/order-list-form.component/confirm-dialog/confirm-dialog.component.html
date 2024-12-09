@@ -89,4 +89,19 @@
             </div>
         </div>
     </ng-template>
+    <ng-template [ngSwitchCase]="7">
+        <h3 mat-dialog-title>Записать заказ в прграммную кассу ?</h3>
+        <div mat-dialog-content class="mat-typography">
+            Вы действительно хотите записать заказ в программную кассу
+        </div>
+        <div mat-dialog-actions>
+            <div class="btn">
+                <button mat-raised-button [mat-dialog-close]="null" class="cancel">НЕТ</button>
+            </div>
+            <div class="btn">
+                <button mat-raised-button class="order-to-programm-cassa" (click)="onClickWriteToProgrammCassa()"
+                    [disabled]="disableButton === true">Записать</button>
+            </div>
+        </div>
+    </ng-template>
 </div>

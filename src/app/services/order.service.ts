@@ -29,6 +29,7 @@ export class OrderService {
     urlOrderSearchByAdres = this.urlOrder + '/findorderbyad/'
     urlGetSuborder = this.urlOrder + '/suborder/';
     urlToCassa = this.urlOrder + '/cassa/';
+    urlToProgrammCassa = this.urlOrder + '/progcassa/'
     urlPause = this.urlOrder + '/pause/';
     urlBelpost = this.urlOrder + '/belpost/';
     urlReturn = this.urlOrder + '/back/';  //! delete
@@ -76,6 +77,9 @@ export class OrderService {
 
     orderWriteToCashbox(data: ToCassa): Observable<Status> {
         return this.http.post<Status>(`${this.urlToCassa}`, data);
+    }
+    orderToProgrammCassa(data: ToCassa): Observable<Status> {
+        return this.http.post<Status>(`${this.urlToProgrammCassa}`, data)
     }
 
     orderReturnToAssembly(data: PauseOrderReq): Observable<Status> {

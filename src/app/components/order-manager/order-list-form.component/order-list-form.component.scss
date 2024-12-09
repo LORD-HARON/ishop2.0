@@ -66,7 +66,7 @@ ng-scrollbar {
     --scrollbar-border-radius: 4px;
 }
 .table-conteiner{
-
+z-index: 1000;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     overflow: hidden;
@@ -137,6 +137,9 @@ ng-scrollbar {
                 .samovivoz{
                     color:#FFD405;
                 }
+                .dostavka24{
+                    color: #d190f0;
+                }
             }
             &:not(:first-child):hover{
                 text-shadow: #fff 1px 0 10px;
@@ -195,6 +198,10 @@ ng-scrollbar {
                 .mileby{
                     color: orange;
                     text-shadow: orange 1px 0 10px;
+                }
+                .dostavka24{
+                    color: #d190f0;
+                    text-shadow: #d190f0 1px 0 10px;
                 }
             }
         }
@@ -262,16 +269,29 @@ ng-scrollbar {
     }
 }
 .to-cassa{
-    color: rgba(65, 155, 38, 0.877);
+    color: #B8F171;
     &:hover{
         color: #fff!important;
-        text-shadow: rgba(65, 155, 38, 0.877) 1px 0 10px;
+        text-shadow: #B8F171 1px 0 10px;
         mat-icon{
             color: #fff;
         }
     }
     mat-icon{
-        color: rgba(65, 155, 38, 0.877);
+        color: #B8F171;
+    }
+}
+.to-programm-cassa{
+    color: #FB0070;
+    &:hover{
+        color: #fff!important;
+        text-shadow: #FB0070 1px 0 10px;
+        mat-icon{
+            color: #fff;
+        }
+    }
+    mat-icon{
+        color: #FB0070;
     }
 }
 
@@ -346,3 +366,4 @@ ng-scrollbar {
         max-width: 30px;
     }
 }
+

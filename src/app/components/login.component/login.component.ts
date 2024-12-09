@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from '@angular/router';
 import { LoginQuery } from "src/app/models/login.models/login-query";
@@ -13,13 +13,14 @@ import { TokenService } from "src/app/services/token.service";
     templateUrl: "./login.component.html",
     styleUrls: ["./login.component.scss"]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
     constructor(
         private router: Router,
         private tokenService: TokenService,
         private loginService: LoginService,
         private snackbarService: SnackbarService
     ) { }
+
     isLoginUser = false;
     loginQuery = new LoginQuery("", "");
 
@@ -28,6 +29,12 @@ export class LoginComponent {
         "login": new FormControl('', Validators.required),
         "password": new FormControl('', Validators.required),
     })
+
+    ngOnInit(): void {
+        if (this.tokenService.getToken() != "") {
+            this.router.navigate(['/'])
+        }
+    }
     onClickLogin() {
         this.loginService.getLogin(new LoginQuery(this.userForm.value.login, this.userForm.value.password)).subscribe({
             next: response => {

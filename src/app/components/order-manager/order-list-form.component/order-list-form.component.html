@@ -54,17 +54,17 @@
                         <ng-template ngSwitchCase="завершен">
                             <div class="ready-shipment"> готов к отгрузке </div>
                         </ng-template>
-                        <ng-template ngSwitchCase="Заблокирован">
-                            <div class="cancel"> Отменен </div>
-                        </ng-template>
                         <ng-template ngSwitchCase="Отправлен">
-                            <div class="return"> отправлен </div>
+                            <div class="ready-shipment"> отправлен </div>
+                        </ng-template>
+                        <ng-template ngSwitchCase="Заблокирован">
+                            <div class="cancel"> отправлен </div>
                         </ng-template>
                         <ng-template ngSwitchCase="Выполнен">
-                            <div class="complete"> Выполнен</div>
+                            <div class="complete"> выполнен</div>
                         </ng-template>
                         <ng-template ngSwitchCase="Отмена">
-                            <div class="return-to-retail"> Вернуть в секцию</div>
+                            <div class="return-to-retail"> вернуть в секцию</div>
                         </ng-template>
                         <div *ngIf="isActive === o.id" class="order-info-conteiner">
                             <app-show-data-order-form [sub_order_id]="o.order.sub_num"></app-show-data-order-form>
@@ -80,7 +80,6 @@
                             <ng-template ngSwitchCase="22">Каменногорская</ng-template>
                             <ng-template ngSwitchCase="25">Молодечно</ng-template>
                             <ng-template ngSwitchCase="21">Тимирязева</ng-template>
-                            <ng-template ngSwitchCase="31">Диамант</ng-template>
                             <ng-template ngSwitchCase="33">Гродно</ng-template>
                             <ng-template ngSwitchCase="18">МОМО</ng-template>
                             <ng-template ngSwitchCase="24">Независимости</ng-template>
@@ -95,7 +94,7 @@
                     <br *ngIf="screenWidth < 1000">
                     <small> Тип доставки: </small>
                     <small
-                        [ngClass]="{'mileby': o.order.delivery_type === 'mileby', 'belpost' : o.order.delivery_type === 'belpost' }"
+                        [ngClass]="{'mileby': o.order.delivery_type === 'mileby', 'belpost' : o.order.delivery_type === 'belpost', 'dostavka24' : o.order.delivery_type === 'dostavka24' }"
                         *ngIf="o.order.delivery_type">
                         {{o.order.delivery_type}}
                     </small>
@@ -145,7 +144,14 @@
                             <span>Запись в кассу</span>
                         </button>
 
-                        <button mat-menu-item *ngIf="(o.status === 'в паузе'|| o.status === 'завершен')&& isAdminIshop"
+                        <button mat-menu-item (click)="openCompliteDialog(o, 7)"
+                            *ngIf="o.order.isCassa && (o.status === 'завершен' || o.status === 'Выполнен')"
+                            [disabled]="o.order.isCassaPause" class="to-programm-cassa">
+                            <mat-icon>send_to_mobile</mat-icon>
+                            <span>Запись в прог. кассу</span>
+                        </button>
+
+                        <button mat-menu-item *ngIf="(o.status === 'в паузе'|| o.status === 'завершен') && isAdminIshop"
                             (click)="openCompliteDialog(o, 3)" class="return-ready-to-collect">
                             <mat-icon>keyboard_return</mat-icon>
                             <span>Вернуть в сборку</span>
@@ -174,8 +180,8 @@
                                 Удалить
                             </span>
                         </button>
-                        <button mat-menu-item *ngIf="(o.status === 'завершен')" (click)="openCompliteDialog(o, 1)"
-                            class="section-return">
+                        <button mat-menu-item *ngIf="(o.status === 'завершен' || o.status === 'Отправлен')"
+                            (click)="openCompliteDialog(o, 1)" class="section-return">
                             <mat-icon>
                                 done
                             </mat-icon>
@@ -203,4 +209,5 @@
             </tr>
         </table>
     </div>
+
 </ng-scrollbar>

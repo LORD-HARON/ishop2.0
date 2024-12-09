@@ -56,8 +56,6 @@ export class OrderComponent implements OnInit {
     confirmClicked = false;
     belpostData: BelpostData | null
     userName = '';
-    orderListAnsw: Array<OrderListAnsw> = [];
-
 
     orderBodyAnsw: OrderBodyAnsw = new OrderBodyAnsw('', '', '', false, '', new ClientInfo('', '', ''), [new OrderBody('', '', '', '', '0', '0', '0', false, '', '', '')], []);
     countReadyСhange: number;
@@ -146,7 +144,7 @@ export class OrderComponent implements OnInit {
             }
         });
         this.userName = this.tokenService.getLogin();
-        this.isAdminIshop = this.tokenService.getTitle() == ('ishopAdmin' || 'dev') ? true : false
+        this.isAdminIshop = this.tokenService.getTitle() == 'ishopAdmin' ? true : false
     }
     completOrder() {
         this.dataSource.forEach(i => {

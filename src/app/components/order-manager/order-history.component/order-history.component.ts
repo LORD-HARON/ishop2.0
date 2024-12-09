@@ -38,6 +38,7 @@ export class OrderHistoryComponent implements OnInit {
         { status: 'не принят', statusName: 'Готов к сборке' },
         { status: 'в паузе', statusName: 'Некомплект' },
         { status: 'завершен', statusName: 'Готов к отгрузке' },
+        { status: 'Отправлен', statusName: 'Отправлен' },
         { status: 'Выполнен', statusName: 'Выполнен' },
         { status: 'Отмена', statusName: 'Вернуть в секцию' },
         { status: 'Заблокирован', statusName: 'Отменен' },
@@ -51,7 +52,6 @@ export class OrderHistoryComponent implements OnInit {
         { status: '22', statusName: 'Каменогорская' },
         { status: '24', statusName: 'Независимости' },
         { status: '25', statusName: 'Молодечно' },
-        { status: '31', statusName: 'Diamond' },
         { status: '32', statusName: 'Outleto' },
         { status: '34', statusName: 'Expobel' },
         { status: '35', statusName: 'Горецкого' },
@@ -62,6 +62,7 @@ export class OrderHistoryComponent implements OnInit {
         { status: '', statusName: 'Самовывоз' },
         { status: 'mileby', statusName: 'Доставка' },
         { status: 'belpost', statusName: 'Белпочта' },
+        { status: 'dostavka24', statusName: 'Доставка 24' }
     ]
     //#endregion
 
