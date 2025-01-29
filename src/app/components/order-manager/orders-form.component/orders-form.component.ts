@@ -11,6 +11,7 @@ import { TokenService } from "src/app/services/token.service";
 import { InvoiceDialogComponent } from "../order-list-form.component/order-list-form.component";
 import { InvoiseSettingsComponent } from "./invoice-settings.component/invoice-settings.component";
 import { AdaptiveService } from "src/app/services/adaptive.service";
+import { CollecotrsSettingComponent } from "./collectors-setting.component/collectors-setting.component";
 
 @Component({
     selector: 'app-orders-form',
@@ -96,7 +97,11 @@ export class OrdersFormComponent implements OnInit {
     openDataInvoiceDialog() {
         const dialogRef = this.dialog.open(InvoiseSettingsComponent);
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+        })
+    }
+    openCollectorsSettingDialog() {
+        const dialogRef = this.dialog.open(CollecotrsSettingComponent);
+        dialogRef.afterClosed().subscribe(result => {
         })
     }
     opentInstructionDialog() {

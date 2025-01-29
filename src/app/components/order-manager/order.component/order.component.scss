@@ -54,8 +54,6 @@
                 }
                 
             }
-
-            
             input{
                 background: rgba(255, 255, 255, 0.2);
                 border: none;
@@ -70,6 +68,7 @@
                 color: #fff;
                 box-shadow: 0 5px rgba(0, 0, 0, 0.05);
                 margin-left: 10px;
+                width: 70%;
             }
             .btn{
                 width: 110px;
@@ -289,7 +288,17 @@
 }
 }
 
-
+.belpost{
+    margin-right: 10px;
+}
+.belpost-count-place{
+    color: gold;
+    transition: 0.2s;
+    &:hover{
+        color: #fff;
+            text-shadow: gold 1px 0 10px;
+    }
+}
 @media screen and (max-width: 1000px){
 
 }

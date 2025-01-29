@@ -34,6 +34,7 @@ import { InstructionDialogComponent } from './components/order-manager/orders-fo
 import { InvoiseSettingsComponent } from './components/order-manager/orders-form.component/invoice-settings.component/invoice-settings.component';
 import { BarcodeInputCountDialogComponent } from './components/order-manager/order.component/order.component';
 import { OrderSentComponent } from './components/order-manager/order-types/order-sent.component/order-sent.component';
+import { CollecotrsSettingComponent } from './components/order-manager/orders-form.component/collectors-setting.component/collectors-setting.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +63,8 @@ import { OrderSentComponent } from './components/order-manager/order-types/order
     InvoiseSettingsComponent,
     BarcodeInputCountDialogComponent,
     OrderCheckBarcodeDialogComponent,
-    OrderSentComponent
+    OrderSentComponent,
+    CollecotrsSettingComponent
   ],
   imports: [
     BrowserModule,

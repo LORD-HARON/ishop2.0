@@ -45,14 +45,18 @@ background: linear-gradient(to bottom, #0F0F0F, #222222);
     }
     a:nth-child(5)::before,
     a:nth-child(5)::after {
-        background: linear-gradient(45deg, orange, #0F0F0F, #0F0F0F, orangered);
+        background: linear-gradient(45deg, green, #0F0F0F, #0F0F0F, #1aff22);
     }
     a:nth-child(6)::before,
     a:nth-child(6)::after {
-        background: linear-gradient(45deg, grey, #0F0F0F, #0F0F0F, #836f00);
+        background: linear-gradient(45deg, orange, #0F0F0F, #0F0F0F, orangered);
     }
     a:nth-child(7)::before,
     a:nth-child(7)::after {
+        background: linear-gradient(45deg, grey, #0F0F0F, #0F0F0F, #836f00);
+    }
+    a:nth-child(8)::before,
+    a:nth-child(8)::after {
         background: linear-gradient(45deg, #ff075b, #0F0F0F, #0F0F0F, #1aff22);
     }
     .active { 

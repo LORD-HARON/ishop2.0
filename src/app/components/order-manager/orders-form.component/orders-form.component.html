@@ -46,7 +46,10 @@
         <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="opentInstructionDialog()" class="instruction-button">Инструкции</button>
             <button mat-menu-item *ngIf="isAdminIshop" (click)="openDataInvoiceDialog()"
-                class="invoice-settings-button">Настройка договоров</button>
+                class="invoice-settings-button">Настройка договоров
+            </button>
+            <button mat-menu-item (click)="openCollectorsSettingDialog()" class="collectors-settings-button">Настройка
+                сборщиков</button>
             <button mat-menu-item (click)="onClickLogout()" class="logout-button">Выйти</button>
         </mat-menu>
     </div>
@@ -99,58 +102,4 @@
                 (onChanged)="onChanged($event)"></app-order-list-form>
         </mat-tab>
     </mat-tab-group>
-    <div class="snow-conteiner" *ngIf="screenWidth > 1000">
-        <div class="initial-snow">
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-            <div class="snow">&#10052;</div>
-        </div>
-    </div>
 </div>

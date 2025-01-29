@@ -1,22 +1,24 @@
-<table style="border:1px black solid; width: 320; height: 213;">
+<table style="border:1px black solid; width: 320; height: 213;" *ngFor="let i of dataList">
     <tr style="border: none">
         <td style="border: none; padding: 0 10px; align-content: center; font-size: large; font-weight: 600;"
             align="center">ОАО "Астомстрой"</td>
-        <td style="border: none"></td>
+        <!-- <td style="border: none"></td> -->
+        <td style="border: none; padding: 0 10px; align-content: center; font-size: large; font-weight: 600; font-size: 50px;"
+            align="center">{{i.postCount}}</td>
     </tr>
     <tr style="border: none">
         <td style="border: none; padding: 0 2px 0 5px" align="center"><img [src]="imgSource + data.barcode" width="150"
                 height="55"></td>
         <td style="border: none; padding: 0 10px" align="center">
-            {{data.username}}
+            {{i.username}}
             <br>
             <br>
-            {{data.address}}
+            {{i.address}}
         </td>
     </tr>
     <tr style="border: none">
         <td style="border: none; padding: 0 10px; font-size: large; font-weight: 600;" align="center"> Заказ
-            №{{data.num}}</td>
+            №{{i.num}}</td>
         <td style="border: none"></td>
     </tr>
     <!-- <tr style="border: none">

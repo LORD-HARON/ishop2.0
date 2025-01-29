@@ -1,0 +1,49 @@
+<div class="main">
+    <h2 mat-dialog-title>Настройка сборщиков</h2>
+    <div class="collectors-input-data-conpeiner">
+        <mat-form-field appearance="outline">
+            <mat-label>ФИО сборщика</mat-label>
+            <input matInput [(ngModel)]="collectorName">
+        </mat-form-field>
+        <div class="btn">
+            <button (click)="AddCollectors()" [disabled]="!collectorName" class='filter'>Добавить</button>
+        </div>
+        <mat-form-field appearance="outline">
+            <mat-label>Поиск</mat-label>
+            <input matInput [(ngModel)]="filterRow" (input)="FilterItems()">
+        </mat-form-field>
+    </div>
+    <div class="table-conteiner">
+        <table>
+            <tr>
+                <th>
+                    Фио
+                </th>
+                <th>
+                    ТО
+                </th>
+                <th>
+                    Действие
+                </th>
+            </tr>
+            <tr *ngFor="let i of showingList">
+                <td>
+                    {{i.collector_name}}
+                </td>
+                <td>
+                    {{i.storaloc}}
+                </td>
+                <td>
+                    <!-- <button mat-mini-fab (click)="deleteCollectors(i.id)"
+                        class="delete-button"><mat-icon>delete</mat-icon></button> -->
+                    <div class="btn">
+                        <button class='delete-button' (click)="deleteCollectors(i.id)">Удалить</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Закрыть</button>
+    </mat-dialog-actions>
+</div>

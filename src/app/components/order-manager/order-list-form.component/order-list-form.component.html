@@ -156,7 +156,7 @@
                             <span>Вернуть в сборку</span>
                         </button>
                         <button mat-menu-item (click)="openCompliteDialog(o, 2)"
-                            *ngIf="(o.status === 'в паузе' || o.status === 'завершен') && isAdminIshop"
+                            *ngIf="(o.status === 'в паузе' || o.status === 'завершен' || o.status === 'Отправлен') && isAdminIshop"
                             [disabled]="o.order.isSendToBitrix" class="send-oms">
                             <mat-icon>send</mat-icon>
                             <span>Оправить в OMS</span>

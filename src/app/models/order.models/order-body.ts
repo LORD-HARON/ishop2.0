@@ -12,6 +12,8 @@ export class OrderBody {
         public vatz?: string,
         public remote_stock?: string,
         public measure?: string,
-        public count_e_s?: string
+        public count_e_s?: string,
+        public collector?: string,
+        public coefficient?: string
     ) { }
 }

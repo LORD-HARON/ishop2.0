@@ -9,6 +9,7 @@ export class OrderBodyAnsw {
         public name: string,
         public belPost: boolean,
         public postCode: string,
+        public postCount: number,
         public aboutClient: ClientInfo,
         public body: Array<OrderBody>,
         public place: string[],

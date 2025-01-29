@@ -55,6 +55,7 @@
     </div>
     <div class="barcode-conteiner" *ngIf="orderBodyAnsw.belPost">
         <span class="belpost">Штрихкод БЕЛПОЧТА:</span>
+        <span class="belpost-count-place">Количество мест: {{orderBodyAnsw.postCount}}</span>
         <div class="list-img-box">
             <div class="img-box" *ngFor="let barcode of belpostBarcodes" (mouseenter)="selectBarcode(barcode)"
                 (mouseleave)="unSelectBarcode()">
@@ -101,10 +102,27 @@
                 <td>{{i.count_e_s}}</td>
                 <td>{{i.count_e}}</td>
                 <td>
-                    <input type="text" placeholder="Введите номер заказа" [(ngModel)]="i.count_g"
-                        (input)="onInputNewCount($event.target.value, i)" (focusout)="onFocusout(i)" [min]="0"
-                        [max]="i.count_e" *ngIf="screenWidth > 1000">
+                    <input type="text" [(ngModel)]="i.count_g" (input)="onInputNewCount($event.target.value, i)"
+                        (focusout)="onFocusout(i)" [min]="0" [max]="i.count_e" *ngIf="screenWidth > 1000" class="input">
                     <span *ngIf="screenWidth < 1000">{{i.count_g}}</span>
+                </td>
+                <td>
+                    <input type="text"
+                        *ngIf="screenWidth > 1000 && (orderStatus === 'завершен' || orderStatus === 'Выполнен')"
+                        class="input" [formControl]="myControl" [matAutocomplete]="auto1"
+                        (input)="onInputNewCollector($event.target.value, i)" (focusout)="onFocusoutCollector(i)"
+                        placeholder="Сборщик" [(ngModel)]="i.collector">
+                    <mat-autocomplete #auto1="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                            {{option}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </td>
+                <td>
+                    <input type="number" [min]="0"
+                        *ngIf="screenWidth > 1000 && (orderStatus === 'завершен' || orderStatus === 'Выполнен')"
+                        class="input" (input)="onInputNewCoef($event.target.value, i)" (focusout)="onFocusoutCoef(i)"
+                        placeholder="Коэф." [(ngModel)]="i.coefficient">
                 </td>
                 <td>
                     <div class="btn" *ngIf="screenWidth < 1000">

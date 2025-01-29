@@ -46,11 +46,12 @@ export class OrderListFormComponent implements OnInit {
         { index: 3, id: '33' },
         { index: 4, id: '11' },
         { index: 5, id: '25' },
-        { index: 6, id: '18' },
-        { index: 7, id: '24' },
-        { index: 8, id: '32' },
-        { index: 9, id: '34' },
-        { index: 10, id: '35' }
+        { index: 6, id: '21' },
+        { index: 7, id: '18' },
+        { index: 8, id: '24' },
+        { index: 9, id: '32' },
+        { index: 10, id: '34' },
+        { index: 11, id: '35' }
     ];
     listStatus: Array<any> = [
         { path: '/orders/ready-build', status: 'gs' },
@@ -112,15 +113,13 @@ export class OrderListFormComponent implements OnInit {
         this.isAdminIshop = this.tokenService.getTitle() == 'ishopAdmin' ? true : false
     }
     loadData(value) {
+
         if (value == null) {
-
-
             let orderListReq = new OrderListReq(this.tokenService.getToken(), this.data ?? '%', this.getStatus() ?? 'gs', this.countRecord.toString());
             this.orderService.getOrders(orderListReq).subscribe({
                 next: response => {
                     if (response) {
                         this.orderListAnsw = response;
-                        console.log(this.orderListAnsw);
                     }
                 },
                 error: error => {
@@ -209,6 +208,7 @@ export class OrderListFormComponent implements OnInit {
                         next: response => {
                             if (response) {
                                 this.orderListAnsw = response;
+                                console.log(this.orderListAnsw);
                             }
                         },
                         error: error => {
@@ -490,7 +490,6 @@ export class OrderListFormComponent implements OnInit {
                 case 'null':
                     this.snackbarService.openRedSnackBar('Некоректный запрос');
                     break;
-
                 case 'delete':
                     this.snackbarService.openSnackGreenBar('Заказ удален')
                     break;
@@ -541,6 +540,8 @@ export class ConfirmDialogComponent {
         let findOrderReq = new FindOrderReq(this.tokenService.getToken(), element.order.num, element.order.name);
         this.orderService.orderCompliteOrder(findOrderReq).subscribe({
             next: response => {
+                console.log(response);
+
                 switch (response.status) {
                     case 'true':
                         this.dialogRef.close('Complete');
@@ -630,6 +631,7 @@ export class ConfirmDialogComponent {
                         this.dialogRef.close('BadAuth')
                         break
                 }
+                this.dialogRef.close('Cassa')
             },
             error: error => {
                 console.log(error);
@@ -655,6 +657,9 @@ export class ConfirmDialogComponent {
                     case 'BadAuth':
                         this.dialogRef.close('BadAuth')
                         break
+                    case 'NULL':
+                        this.dialogRef.close('null')
+                        break;
                 }
             },
             error: error => {

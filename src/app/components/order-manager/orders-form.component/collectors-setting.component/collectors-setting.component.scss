@@ -1,0 +1,115 @@
+.main{
+    background: linear-gradient(to bottom, #0F0F0F, #222222);
+    width: 600px;
+    height: 600px;
+    h2{
+        color: #fff!important;
+        font-weight: bold;
+    }
+    display: flex;
+    flex-direction: column;
+}
+.collectors-input-data-conpeiner{
+    width: 100%;
+    mat-form-field{
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+.table-conteiner{
+    width: 100%;
+    height: 400px;
+    overflow: auto;
+    color: #fff!important;
+    font-weight: bold;
+    table{
+        width: 100%;
+        text-align: center;
+        font-size: 1.32em;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+}
+.btn {
+    position: relative;
+    width: 98%;
+    height: 40px;
+    margin-left: 5px;
+}
+.filter{
+    color: greenyellow!important;
+    &:hover{
+        text-shadow: greenyellow 1px 0 10px;
+        color: #fff;
+    }
+}
+.btn a,.btn button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.01);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+    border-radius: 30px;
+    z-index: 1;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: 0.5s;
+    backdrop-filter: blur(15px);
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    font-weight: bold;
+}
+.btn:hover a, .btn:hover button {
+    letter-spacing: 3px;
+    color: #fff;
+}
+.btn a::before, .btn button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0.15), transparent);
+    transform: skewX(45deg) translateX(0);
+    transition: 0.5s;
+}
+.btn:hover a::before {
+    transform: skewX(45deg) translateX(200%);
+}
+.btn:hover button::before{
+    transform: skewX(45deg) translateX(200%);
+}
+.btn:hover::before {
+    bottom: 0;
+    height: 50%;
+    width: 80%;
+    border-radius: 30px;
+    transition-delay: 0.5s;
+}
+.btn:hover::after {
+    top: 0;
+    height: 50%;
+    width: 80%;
+    border-radius: 30px;
+    transition-delay: 0.5s;
+}
+
+.delete-button{
+    // background: linear-gradient(to bottom, #0F0F0F, #222222);
+    transition: 0.2s;
+    color: red;
+    &:hover{
+        text-shadow: red 1px 0 10px;
+        color: #fff;
+    }
+}

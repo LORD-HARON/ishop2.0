@@ -25,14 +25,19 @@ import { DelPostRequest } from "src/app/models/order.models/del-post-req";
 import { MatIconRegistry } from "@angular/material/icon";
 import { AdaptiveService } from "src/app/services/adaptive.service";
 import { CheckByArticleModel } from "src/app/models/order.models/check-by-article-model";
+import { CollectorsService } from "src/app/services/collectors.service";
+import { Token } from "src/app/models/token";
 
 export interface BelpostData {
     barcode: string,
     username: string,
     address: string,
     num: string,
+    postCount: number
 }
-
+interface Collectors {
+    name: string
+}
 @Component({
     selector: 'app-order',
     templateUrl: './order.component.html',
@@ -41,9 +46,9 @@ export interface BelpostData {
 export class OrderComponent implements OnInit {
     @Input() data: string;
     @ViewChild('barcodePrint', { static: true }) barcodePrint: any;
-    displayedColumns = ['Артикул', ' ', 'Штрихкод', 'Наименование', 'ед. изм.', 'Количество на складе', 'Требуемое количество', 'Собранное количество', ''];
+    displayedColumns = ['Артикул', ' ', 'Штрихкод', 'Наименование', 'ед. изм.', 'Количество на складе', 'Требуемое количество', 'Собранное количество', 'Сборщик', 'Коэф.', ''];
     displayedColumnsPrint = ['Артикул', 'Штрихкод', 'Наименование', 'ед. изм.', 'Количество на складе', 'Требуемое количество', 'Собранное количество', 'Стоимость'];
-    dataSource: Array<OrderBody> = [new OrderBody('', '', '', '', '0', '0', '0', false, '', '', '', '')];
+    dataSource: Array<OrderBody> = [new OrderBody('', '', '', '', '0', '0', '0', false, '', '', '', '',)];
     client: ClientInfo = new ClientInfo('', '', '');
     orderId = '';
     isDataChanged = false;
@@ -57,7 +62,7 @@ export class OrderComponent implements OnInit {
     belpostData: BelpostData | null
     userName = '';
 
-    orderBodyAnsw: OrderBodyAnsw = new OrderBodyAnsw('', '', '', false, '', new ClientInfo('', '', ''), [new OrderBody('', '', '', '', '0', '0', '0', false, '', '', '')], []);
+    orderBodyAnsw: OrderBodyAnsw = new OrderBodyAnsw('', '', '', false, '', 0, new ClientInfo('', '', ''), [new OrderBody('', '', '', '', '0', '0', '0', false, '', '', '')], []);
     countReadyСhange: number;
     belPostAnsw: BelPostAnsw
     splitElement = ';';
@@ -82,9 +87,9 @@ export class OrderComponent implements OnInit {
         private snackbarService: SnackbarService,
         private matIconReg: MatIconRegistry,
         private adaptiveService: AdaptiveService,
+        private collectorsService: CollectorsService
     ) {
         this.orderId = route.snapshot.params['id'];
-
         this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
             startWith(null),
             map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allFruits.slice())),
@@ -125,9 +130,12 @@ export class OrderComponent implements OnInit {
 
         return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
     }
+
     completButtonStatus: boolean = true;
     screenWidth: number
+
     ngOnInit(): void {
+
         this.screenWidth = this.adaptiveService.GetCurrentWidth()
         this.matIconReg.setDefaultFontSetClass('material-symbols-outlined');
         // this.titleService.setTitle(this.titleService.getTitle() + ' №' + this.orderId);
@@ -145,6 +153,35 @@ export class OrderComponent implements OnInit {
         });
         this.userName = this.tokenService.getLogin();
         this.isAdminIshop = this.tokenService.getTitle() == 'ishopAdmin' ? true : false
+        this.getCollectors()
+    }
+    filteredOptions: Observable<string[]>;
+    collectorsList: string[] = []
+    myControl = new FormControl();
+    clearFilter() {
+        this.myControl.setValue('')
+    }
+
+    getCollectors() {
+        this.collectorsService.GetCollectors(new Token(this.tokenService.getToken())).subscribe({
+            next: result => {
+                result.forEach(x => this.collectorsList.push(x.collector_name))
+                this.filteredOptions = this.myControl.valueChanges
+                    .pipe(
+                        startWith(''),
+                        map(value => this._filterCollectors(value))
+                    );
+
+            },
+            error: error => {
+                console.log(error);
+                this.snackbarService.openRedSnackBar()
+            }
+        })
+    }
+    private _filterCollectors(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.collectorsList.filter(option => option.toLowerCase().includes(filterValue));
     }
     completOrder() {
         this.dataSource.forEach(i => {
@@ -216,7 +253,34 @@ export class OrderComponent implements OnInit {
                 element.count_g = '0';
         }
     }
+    onInputNewCollector(event: string, element: OrderBody): void {
+        if (event.length >= 0) {
+            console.log(event);
 
+            element.collector = event;
+            element.changed = true;
+            this.isDataChanged = this.checkDataChanged();
+            if (!element.collector)
+                element.collector = '';
+        }
+    }
+    onInputNewCoef(event: string, element: OrderBody): void {
+        if (event.length >= 0) {
+            element.coefficient = event;
+            element.changed = true;
+            this.isDataChanged = this.checkDataChanged();
+            if (!element.coefficient)
+                element.coefficient = '';
+        }
+    }
+    onFocusoutCollector(element) {
+        if (!element.collector)
+            element.collector = '';
+    }
+    onFocusoutCoef(element) {
+        if (!element.coefficient)
+            element.coefficient = '0';
+    }
     onFocusout(element) {
         if (+element.count_g > +element.count_e)
             element.count_g = element.count_e;
@@ -249,7 +313,6 @@ export class OrderComponent implements OnInit {
         if (!this.orderBodyAnsw.belPost || (this.orderBodyAnsw.belPost && this.belpostBarcodes.length > 0)) {
             let order = new Changer(this.tokenService.getToken(), this.orderBodyAnsw, this.tokenService.getLogin());
             // this.disableSaveButton = true;
-
             this.orderService.orderSaveChange(order).subscribe({
                 next: response => {
                     switch (response.status) {
@@ -319,7 +382,7 @@ export class OrderComponent implements OnInit {
     }
 
     onPrintBelpost(code: string) {
-        this.belpostData = { barcode: code, username: this.orderBodyAnsw.aboutClient.fIO, address: this.orderBodyAnsw.aboutClient.adress, num: this.orderBodyAnsw.num }
+        this.belpostData = { barcode: code, username: this.orderBodyAnsw.aboutClient.fIO, address: this.orderBodyAnsw.aboutClient.adress, num: this.orderBodyAnsw.num, postCount: this.orderBodyAnsw.postCount }
     }
 
     //!Dialogs
@@ -445,11 +508,9 @@ export class OrderComponent implements OnInit {
     openStoragePrintBarcodeDialog() {
         const dialogRef = this.dialog.open(BarcodeInputCountDialogComponent, {
             width: "300px",
-            data: {},
         });
-
         dialogRef.afterClosed().subscribe(result => {
-            if (result >= 1 && result <= 4) {
+            if (result >= 1 && result <= 100) {
                 let belPostReq = new BelPostReq(this.tokenService.getToken(), this.orderBodyAnsw.sub_num, result)
                 this.orderService.getBarcode(belPostReq).subscribe({
                     next: response => {
@@ -513,23 +574,19 @@ export class OrderComponent implements OnInit {
     templateUrl: './barcode-prints/belpost-input-count-dialog/belpost-input-count-dialog.html',
     styleUrls: ['./barcode-prints/belpost-input-count-dialog/belpost-input-count-dialog.scss']
 })
-export class BarcodeInputCountDialogComponent implements OnInit {
-    selectedVal: string = '';
+export class BarcodeInputCountDialogComponent {
+    selectedVal: number = 1
 
     constructor(
         public dialogRef: MatDialogRef<BarcodeInputCountDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any,
     ) { }
-
-    ngOnInit(): void {
-    }
 
     onNoClick() {
         this.dialogRef.close();
     }
 
     onOkClick() {
-        if (+this.selectedVal >= 1 && +this.selectedVal <= 4)
+        if (this.selectedVal >= 1 && this.selectedVal <= 100)
             this.dialogRef.close(+this.selectedVal);
     }
 }
