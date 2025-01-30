@@ -33,7 +33,7 @@ export interface BelpostData {
     username: string,
     address: string,
     num: string,
-    postCount: number
+    // postCount: number
 }
 interface Collectors {
     name: string
@@ -382,7 +382,8 @@ export class OrderComponent implements OnInit {
     }
 
     onPrintBelpost(code: string) {
-        this.belpostData = { barcode: code, username: this.orderBodyAnsw.aboutClient.fIO, address: this.orderBodyAnsw.aboutClient.adress, num: this.orderBodyAnsw.num, postCount: this.orderBodyAnsw.postCount }
+        this.belpostData = { barcode: code, username: this.orderBodyAnsw.aboutClient.fIO, address: this.orderBodyAnsw.aboutClient.adress, num: this.orderBodyAnsw.num }
+        // this.belpostData = { barcode: code, username: this.orderBodyAnsw.aboutClient.fIO, address: this.orderBodyAnsw.aboutClient.adress, num: this.orderBodyAnsw.num, postCount: this.orderBodyAnsw.postCount }
     }
 
     //!Dialogs
@@ -510,7 +511,8 @@ export class OrderComponent implements OnInit {
             width: "300px",
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result >= 1 && result <= 100) {
+            if (result >= 1 && result <= 4) {
+                // if (result >= 1 && result <= 100) {
                 let belPostReq = new BelPostReq(this.tokenService.getToken(), this.orderBodyAnsw.sub_num, result)
                 this.orderService.getBarcode(belPostReq).subscribe({
                     next: response => {
@@ -575,10 +577,11 @@ export class OrderComponent implements OnInit {
     styleUrls: ['./barcode-prints/belpost-input-count-dialog/belpost-input-count-dialog.scss']
 })
 export class BarcodeInputCountDialogComponent {
-    selectedVal: number = 1
-
+    // selectedVal: number = 1
+    selectedVal: string = ''
     constructor(
         public dialogRef: MatDialogRef<BarcodeInputCountDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any,
     ) { }
 
     onNoClick() {
@@ -586,7 +589,8 @@ export class BarcodeInputCountDialogComponent {
     }
 
     onOkClick() {
-        if (this.selectedVal >= 1 && this.selectedVal <= 100)
+        if (+this.selectedVal >= 1 && +this.selectedVal <= 4)
+            // if (this.selectedVal >= 1 && this.selectedVal <= 100)
             this.dialogRef.close(+this.selectedVal);
     }
 }

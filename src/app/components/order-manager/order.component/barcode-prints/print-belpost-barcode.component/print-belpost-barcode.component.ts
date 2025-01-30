@@ -6,7 +6,7 @@ export interface DialogData {
     username: string,
     address: string,
     num: string,
-    postCount: number
+    // postCount: number
 }
 
 @Component({
@@ -26,9 +26,9 @@ export class PrintBelpostBarcodeComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        for (let index = 1; index <= this.data.postCount; index++) {
-            this.dataList.push({ barcode: this.data.barcode, username: this.data.username, address: this.data.address, num: this.data.num, postCount: index })
-        }
+        // for (let index = 1; index <= this.data.postCount; index++) {
+        //     this.dataList.push({ barcode: this.data.barcode, username: this.data.username, address: this.data.address, num: this.data.num, postCount: index })
+        // }
     }
 
 }
