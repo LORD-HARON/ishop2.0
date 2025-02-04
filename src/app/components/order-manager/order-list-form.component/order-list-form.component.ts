@@ -41,17 +41,16 @@ export class OrderListFormComponent implements OnInit {
     displayedTsdColumns = ['Статус', 'Заказ', 'Место', 'Действие']
     idShops: Array<any> = [
         { index: 0, id: '%' },
-        { index: 1, id: '8' },
-        { index: 2, id: '22' },
-        { index: 3, id: '33' },
-        { index: 4, id: '11' },
-        { index: 5, id: '25' },
-        { index: 6, id: '21' },
-        { index: 7, id: '18' },
-        { index: 8, id: '24' },
-        { index: 9, id: '32' },
-        { index: 10, id: '34' },
-        { index: 11, id: '35' }
+        { index: 1, id: '22' },
+        { index: 2, id: '21' },
+        { index: 3, id: '18' },
+        { index: 4, id: '24' },
+        { index: 5, id: '32' },
+        { index: 6, id: '34' },
+        { index: 7, id: '35' },
+        { index: 8, id: '33' },
+        { index: 9, id: '11' },
+        { index: 10, id: '25' },
     ];
     listStatus: Array<any> = [
         { path: '/orders/ready-build', status: 'gs' },
@@ -113,7 +112,6 @@ export class OrderListFormComponent implements OnInit {
         this.isAdminIshop = this.tokenService.getTitle() == 'ishopAdmin' ? true : false
     }
     loadData(value) {
-
         if (value == null) {
             let orderListReq = new OrderListReq(this.tokenService.getToken(), this.data ?? '%', this.getStatus() ?? 'gs', this.countRecord.toString());
             this.orderService.getOrders(orderListReq).subscribe({

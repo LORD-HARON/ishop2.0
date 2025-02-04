@@ -109,11 +109,11 @@
                 <td>
                     <input type="text"
                         *ngIf="screenWidth > 1000 && (orderStatus === 'завершен' || orderStatus === 'Выполнен')"
-                        class="input" [formControl]="myControl" [matAutocomplete]="auto1"
-                        (input)="onInputNewCollector($event.target.value, i)" (focusout)="onFocusoutCollector(i)"
-                        placeholder="Сборщик" [(ngModel)]="i.collector">
+                        class="input" [matAutocomplete]="auto1" (input)="onInputNewCollector($event.target.value, i)"
+                        #jokeField="ngModel" (ngModelChange)="inputAuto(i.collector)"
+                        (focusout)="onFocusoutCollector(i)" placeholder="Сборщик" [(ngModel)]="i.collector">
                     <mat-autocomplete #auto1="matAutocomplete">
-                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        <mat-option *ngFor="let option of filteredOptions|async" [value]="option">
                             {{option}}
                         </mat-option>
                     </mat-autocomplete>

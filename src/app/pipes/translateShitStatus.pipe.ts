@@ -15,7 +15,6 @@ export class trueStatus implements PipeTransform {
         { status: 'belpost', statusName: 'Белпочта' },
     ]
     storeList: PropList[] = [
-        { status: '8', statusName: 'Долгиновский' },
         { status: '11', statusName: 'Брест' },
         { status: '18', statusName: 'Партизанский' },
         { status: '21', statusName: 'Тимирязева' },

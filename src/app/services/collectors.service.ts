@@ -16,11 +16,15 @@ export class CollectorsService {
     }
 
     getCollectorsUrl = environment.apiUrl + '/GetCollectors'
+    getCollectorsNameUrl = environment.apiUrl + '/GetCollectorsNames'
     addCollectorUrl = environment.apiUrl + '/AddCollector'
     deleteCollectorUrl = environment.apiUrl + '/DeleteCollector'
 
     GetCollectors(data: Token): Observable<CollectorsModel[]> {
         return this.http.post<CollectorsModel[]>(this.getCollectorsUrl, data)
+    }
+    GetCollectorsNames(data: Token): Observable<string[]> {
+        return this.http.post<string[]>(this.getCollectorsNameUrl, data)
     }
     AddCollector(data: AddCollectorModel): Observable<Status> {
         return this.http.post<Status>(this.addCollectorUrl, data)

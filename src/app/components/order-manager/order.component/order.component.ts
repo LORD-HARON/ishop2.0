@@ -27,6 +27,7 @@ import { AdaptiveService } from "src/app/services/adaptive.service";
 import { CheckByArticleModel } from "src/app/models/order.models/check-by-article-model";
 import { CollectorsService } from "src/app/services/collectors.service";
 import { Token } from "src/app/models/token";
+import { CollectorsModel } from "src/app/models/collectors.models/collectors";
 
 export interface BelpostData {
     barcode: string,
@@ -97,12 +98,10 @@ export class OrderComponent implements OnInit {
     }
     add(event: MatChipInputEvent): void {
         const value = (event.value || '').trim();
-
         // Add our fruit
         if (value) {
             this.fruits.push(value);
         }
-
         // Clear the input value
         this.fruitInput.nativeElement.value = "";
         this.fruitCtrl.setValue(null);
@@ -135,7 +134,7 @@ export class OrderComponent implements OnInit {
     screenWidth: number
 
     ngOnInit(): void {
-
+        this.getCollectors()
         this.screenWidth = this.adaptiveService.GetCurrentWidth()
         this.matIconReg.setDefaultFontSetClass('material-symbols-outlined');
         // this.titleService.setTitle(this.titleService.getTitle() + ' №' + this.orderId);
@@ -143,8 +142,8 @@ export class OrderComponent implements OnInit {
         this.orderService.getSuborder(orderBodyReq).subscribe({
             next: response => {
                 if (response) {
+                    console.log(response);
                     this.getData(response);
-
                 }
             },
             error: error => {
@@ -153,25 +152,16 @@ export class OrderComponent implements OnInit {
         });
         this.userName = this.tokenService.getLogin();
         this.isAdminIshop = this.tokenService.getTitle() == 'ishopAdmin' ? true : false
-        this.getCollectors()
+
     }
     filteredOptions: Observable<string[]>;
     collectorsList: string[] = []
     myControl = new FormControl();
-    clearFilter() {
-        this.myControl.setValue('')
-    }
 
     getCollectors() {
-        this.collectorsService.GetCollectors(new Token(this.tokenService.getToken())).subscribe({
+        this.collectorsService.GetCollectorsNames(new Token(this.tokenService.getToken())).subscribe({
             next: result => {
-                result.forEach(x => this.collectorsList.push(x.collector_name))
-                this.filteredOptions = this.myControl.valueChanges
-                    .pipe(
-                        startWith(''),
-                        map(value => this._filterCollectors(value))
-                    );
-
+                this.collectorsList = result
             },
             error: error => {
                 console.log(error);
@@ -179,9 +169,16 @@ export class OrderComponent implements OnInit {
             }
         })
     }
-    private _filterCollectors(value: string): string[] {
-        const filterValue = value.toLowerCase();
-        return this.collectorsList.filter(option => option.toLowerCase().includes(filterValue));
+    inputAuto(element: string) {
+        let test = new Observable<string[]>(x => x.next(this.collectorsList))
+        this.filteredOptions = test
+            .pipe(
+                map(x => this._filterCollectors(x, element))
+            )
+    }
+    private _filterCollectors(value, element: string): string[] {
+        // const filterValue = value == '' || value == null ? value : value.toLowerCase();
+        return value.filter(option => option.includes(element));
     }
     completOrder() {
         this.dataSource.forEach(i => {
@@ -215,7 +212,6 @@ export class OrderComponent implements OnInit {
         this.fruits = response.place;
         this.client = this.orderBodyAnsw.aboutClient;
         this.dataSource = this.orderBodyAnsw.body;
-
         this.dataSource.forEach(element => {
             if (element.count_g != element.count_e) {
                 this.completButtonStatus = false
@@ -232,7 +228,6 @@ export class OrderComponent implements OnInit {
                 console.log(error);
             }
         });
-        console.log(this.orderBodyAnsw);
     }
 
     getBelpostBarcodes(value: string) {
@@ -254,14 +249,13 @@ export class OrderComponent implements OnInit {
         }
     }
     onInputNewCollector(event: string, element: OrderBody): void {
+        if (!element.collector)
+            element.collector = '';
         if (event.length >= 0) {
-            console.log(event);
-
             element.collector = event;
             element.changed = true;
             this.isDataChanged = this.checkDataChanged();
-            if (!element.collector)
-                element.collector = '';
+
         }
     }
     onInputNewCoef(event: string, element: OrderBody): void {

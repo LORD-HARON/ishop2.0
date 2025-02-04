@@ -45,7 +45,6 @@ export class OrderHistoryComponent implements OnInit {
     ]
     storeList: PropList[] = [
         { status: '%', statusName: 'Все' },
-        { status: '8', statusName: 'Долгиновский' },
         { status: '11', statusName: 'Брест' },
         { status: '18', statusName: 'Партизанский' },
         { status: '21', statusName: 'Тимирязева' },

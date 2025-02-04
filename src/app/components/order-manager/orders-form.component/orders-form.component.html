@@ -57,48 +57,44 @@
         <mat-tab label="Все">
             <app-order-list-form [data]="'%'" (onChanged)="onChanged($event)"></app-order-list-form>
         </mat-tab>
-        <mat-tab label="Долгиновский">
-            <app-order-list-form *ngIf="tabIndex === 1" [data]="'8'"
-                (onChanged)="onChanged($event)"></app-order-list-form>
-        </mat-tab>
         <mat-tab label="Каменногорская">
-            <app-order-list-form *ngIf="tabIndex === 2" [data]="'22'"
-                (onChanged)="onChanged($event)"></app-order-list-form>
-        </mat-tab>
-        <mat-tab label="Гродно">
-            <app-order-list-form *ngIf="tabIndex === 3" [data]="'33'"
-                (onChanged)="onChanged($event)"></app-order-list-form>
-        </mat-tab>
-        <mat-tab label="Брест">
-            <app-order-list-form *ngIf="tabIndex === 4" [data]="'11'"
-                (onChanged)="onChanged($event)"></app-order-list-form>
-        </mat-tab>
-        <mat-tab label="Молодечно">
-            <app-order-list-form *ngIf="tabIndex === 5" [data]="'25'"
+            <app-order-list-form *ngIf="tabIndex === 1" [data]="'22'"
                 (onChanged)="onChanged($event)"></app-order-list-form>
         </mat-tab>
         <mat-tab label="Тимирязева">
-            <app-order-list-form *ngIf="tabIndex === 6" [data]="'21'"
+            <app-order-list-form *ngIf="tabIndex === 2" [data]="'21'"
                 (onChanged)="onChanged($event)"></app-order-list-form>
         </mat-tab>
         <mat-tab label="МОМО">
-            <app-order-list-form *ngIf="tabIndex === 7" [data]="'18'"
+            <app-order-list-form *ngIf="tabIndex === 3" [data]="'18'"
                 (onChanged)="onChanged($event)"></app-order-list-form>
         </mat-tab>
         <mat-tab label="Независимости">
-            <app-order-list-form *ngIf="tabIndex === 8" [data]="'24'"
+            <app-order-list-form *ngIf="tabIndex === 4" [data]="'24'"
                 (onChanged)="onChanged($event)"></app-order-list-form>
         </mat-tab>
         <mat-tab label="Жукова">
-            <app-order-list-form *ngIf="tabIndex === 9" [data]="'32'"
+            <app-order-list-form *ngIf="tabIndex === 5" [data]="'32'"
                 (onChanged)="onChanged($event)"></app-order-list-form>
         </mat-tab>
         <mat-tab label="Экспобел">
-            <app-order-list-form *ngIf="tabIndex === 10" [data]="'34'"
+            <app-order-list-form *ngIf="tabIndex === 6" [data]="'34'"
                 (onChanged)="onChanged($event)"></app-order-list-form>
         </mat-tab>
         <mat-tab label="Горецкого">
-            <app-order-list-form *ngIf="tabIndex === 11" [data]="'35'"
+            <app-order-list-form *ngIf="tabIndex === 7" [data]="'35'"
+                (onChanged)="onChanged($event)"></app-order-list-form>
+        </mat-tab>
+        <mat-tab label="Гродно">
+            <app-order-list-form *ngIf="tabIndex === 8" [data]="'33'"
+                (onChanged)="onChanged($event)"></app-order-list-form>
+        </mat-tab>
+        <mat-tab label="Брест">
+            <app-order-list-form *ngIf="tabIndex === 9" [data]="'11'"
+                (onChanged)="onChanged($event)"></app-order-list-form>
+        </mat-tab>
+        <mat-tab label="Молодечно">
+            <app-order-list-form *ngIf="tabIndex === 10" [data]="'25'"
                 (onChanged)="onChanged($event)"></app-order-list-form>
         </mat-tab>
     </mat-tab-group>

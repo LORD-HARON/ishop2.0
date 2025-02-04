@@ -13,7 +13,7 @@ export class OrderBody {
         public remote_stock?: string,
         public measure?: string,
         public count_e_s?: string,
-        public collector?: string,
+        public collector: string = '',
         public coefficient?: string
     ) { }
 }

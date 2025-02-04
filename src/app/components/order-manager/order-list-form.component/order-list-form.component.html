@@ -74,7 +74,6 @@
                     <a [routerLink]="['/orders/order', o.order.sub_num]"> № {{o.order.num}} -
                         <ng-container *ngIf="o.order.name"></ng-container>
                         <a [ngSwitch]="o.order.name">
-                            <ng-template ngSwitchCase="8">Долгиновский</ng-template>
                             <ng-template ngSwitchCase="11">Брест</ng-template>
                             <ng-template ngSwitchCase="22">Каменногорская</ng-template>
                             <ng-template ngSwitchCase="25">Молодечно</ng-template>
