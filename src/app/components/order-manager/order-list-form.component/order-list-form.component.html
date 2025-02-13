@@ -97,6 +97,10 @@
                         {{o.order.delivery_type}}
                     </small>
                     <small class="samovivoz" *ngIf="!o.order.delivery_type"> самовывоз </small>
+                    <div>
+                        <small>Время клиента:</small>
+                        <small class="called-time"> {{o.order.order_called_time}}</small>
+                    </div>
                 </td>
                 <td *ngIf="screenWidth > 1000">
                     <div class="fio">{{o.aboutClient.fIO}}</div>

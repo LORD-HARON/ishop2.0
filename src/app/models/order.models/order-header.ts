@@ -5,6 +5,7 @@ export class OrderHeader {
         public name: string,
         public datetime: string,
         public delivery_type: string,
+        public order_called_time: string,
         public isCassa: boolean,
         public isCassaPause: boolean,
         public isReturn: boolean,

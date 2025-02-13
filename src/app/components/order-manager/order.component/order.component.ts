@@ -34,7 +34,7 @@ export interface BelpostData {
     username: string,
     address: string,
     num: string,
-    // postCount: number
+    postCount: number
 }
 interface Collectors {
     name: string
@@ -376,8 +376,8 @@ export class OrderComponent implements OnInit {
     }
 
     onPrintBelpost(code: string) {
-        this.belpostData = { barcode: code, username: this.orderBodyAnsw.aboutClient.fIO, address: this.orderBodyAnsw.aboutClient.adress, num: this.orderBodyAnsw.num }
-        // this.belpostData = { barcode: code, username: this.orderBodyAnsw.aboutClient.fIO, address: this.orderBodyAnsw.aboutClient.adress, num: this.orderBodyAnsw.num, postCount: this.orderBodyAnsw.postCount }
+        // this.belpostData = { barcode: code, username: this.orderBodyAnsw.aboutClient.fIO, address: this.orderBodyAnsw.aboutClient.adress, num: this.orderBodyAnsw.num }
+        this.belpostData = { barcode: code, username: this.orderBodyAnsw.aboutClient.fIO, address: this.orderBodyAnsw.aboutClient.adress, num: this.orderBodyAnsw.num, postCount: this.orderBodyAnsw.postCount }
     }
 
     //!Dialogs
