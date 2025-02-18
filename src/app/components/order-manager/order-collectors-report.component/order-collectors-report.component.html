@@ -1,0 +1,90 @@
+<div class="main">
+    <div class="filter-conteiner">
+        <div class="filter-conteiner-box">
+            <mat-form-field appearance="outline">
+                <mat-label>Выберите дату c:</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="startDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Выберите дату по:</mat-label>
+                <input matInput [matDatepicker]="picker1" [(ngModel)]="endDate">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+            <div class="btn">
+                <button mat-stroked-button class="filter" (click)="getReport()">
+                    Отобрать
+                </button>
+            </div>
+            <div class="btn">
+                <button mat-stroked-button class="clear">
+                    Очистить
+                </button>
+            </div>
+            <div class="btn">
+                <button mat-stroked-button class="export" (click)="getExcelReport()"
+                    [disabled]="collectorsReportList.length == 0">
+                    Export
+                </button>
+            </div>
+        </div>
+        <div class="filter-conteiner-box">
+            <mat-form-field appearance="outline">
+                <mat-label>Торговый объект:</mat-label>
+                <mat-select [(ngModel)]="selectedStore">
+                    <mat-option *ngFor="let s of storeList" [value]="s.status">{{s.statusName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>ФИО</mat-label>
+                <input matInput type="text" [matAutocomplete]="auto1" (ngModelChange)="inputAuto(selectedUser)"
+                    [(ngModel)]="selectedUser">
+                <mat-autocomplete #auto1="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions|async" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <!-- <input type="text" [matAutocomplete]="auto1" (input)="onInputNewCollector($event.target.value, i)"
+            (ngModelChange)="inputAuto(i.collector)"
+            (focusout)="onFocusoutCollector(i)" placeholder="Сборщик" [(ngModel)]="i.collector">
+        <mat-autocomplete #auto1="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions|async" [value]="option">
+                {{option}}
+            </mat-option>
+        </mat-autocomplete> -->
+        </div>
+    </div>
+    <div class="table-conteiner">
+        <table>
+            <tr>
+                <td *ngFor="let c of displayedColumns">
+                    {{c}}
+                </td>
+            </tr>
+            <tr *ngFor="let i of collectorsReportList">
+                <td>
+                    {{i.orderId}}
+                </td>
+                <td>
+                    {{i.collectDate}}
+                </td>
+                <td>
+                    {{i.article}}
+                </td>
+                <td>
+                    {{i.count}}
+                </td>
+                <td>
+                    {{i.coefficient}}
+                </td>
+                <td>
+                    {{i.collector}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

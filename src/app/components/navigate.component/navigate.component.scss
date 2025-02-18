@@ -59,6 +59,10 @@ background: linear-gradient(to bottom, #0F0F0F, #222222);
     a:nth-child(8)::after {
         background: linear-gradient(45deg, #ff075b, #0F0F0F, #0F0F0F, #1aff22);
     }
+    a:nth-child(9)::before,
+    a:nth-child(9)::after {
+        background: linear-gradient(45deg, #ff075b, #0F0F0F, #0F0F0F, #1aff22);
+    }
     .active { 
         font-weight: bolder;
         &::before {

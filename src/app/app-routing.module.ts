@@ -12,6 +12,7 @@ import { OrderCompletedComponent } from './components/order-manager/order-types/
 import { OrderHistoryComponent } from './components/order-manager/order-history.component/order-history.component';
 import { loginGuard } from './guards/login.guard';
 import { OrderComponent } from './components/order-manager/order.component/order.component';
+import { OrderCollectorsReportComponent } from './components/order-manager/order-collectors-report.component/order-collectors-report.component';
 
 
 const childRoutes: Routes = [
@@ -23,7 +24,8 @@ const childRoutes: Routes = [
   { path: 'canceled', component: OrderCanceledComponent, canActivate: [loginGuard] },
   { path: 'completed', component: OrderCompletedComponent, canActivate: [loginGuard] },
   { path: 'statushistory', component: OrderHistoryComponent, canActivate: [loginGuard] },
-  { path: 'order/:id', component: OrderComponent, data: { id: '1', barcodes: '' }, canActivate: [loginGuard] }
+  { path: 'order/:id', component: OrderComponent, data: { id: '1', barcodes: '' }, canActivate: [loginGuard] },
+  { path: 'collectors-report', component: OrderCollectorsReportComponent }
 ]
 
 const routes: Routes = [
