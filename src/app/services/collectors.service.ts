@@ -10,12 +10,13 @@ import { GetCollectorsReportModel } from '../models/collectors.models/get-collec
 import { GetCollectorsReportAnswerModel } from '../models/collectors.models/get-collectors-report-answer';
 import { GetCollectorsExcelModel } from '../models/collectors.models/get-collectors-excel';
 import { saveAs } from 'file-saver'
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CollectorsService {
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private snackbarService: SnackbarService) {
     }
 
     getCollectorsUrl = environment.apiUrl + '/GetCollectors'
@@ -47,6 +48,7 @@ export class CollectorsService {
             },
             error: error => {
                 console.log(error)
+                this.snackbarService.openRedSnackBar()
             }
         })
     }
