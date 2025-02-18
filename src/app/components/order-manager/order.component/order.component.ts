@@ -142,7 +142,6 @@ export class OrderComponent implements OnInit {
         this.orderService.getSuborder(orderBodyReq).subscribe({
             next: response => {
                 if (response) {
-                    console.log(response);
                     this.getData(response);
                 }
             },
@@ -189,12 +188,10 @@ export class OrderComponent implements OnInit {
     }
     selectBarcode(barcode: any) {
         this.selectedBarcode = barcode;
-        console.log(this.selectedBarcode);
     }
 
     unSelectBarcode() {
         this.selectedBarcode = '';
-        console.log('------');
     }
 
     onClickIcon(barcode) {
@@ -505,28 +502,24 @@ export class OrderComponent implements OnInit {
             width: "300px",
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result >= 1 && result <= 4) {
-                // if (result >= 1 && result <= 100) {
+            // if (result >= 1 && result <= 4) {
+            if (result >= 1 && result <= 100) {
                 let belPostReq = new BelPostReq(this.tokenService.getToken(), this.orderBodyAnsw.sub_num, result)
                 this.orderService.getBarcode(belPostReq).subscribe({
                     next: response => {
                         if (response) {
                             this.belPostAnsw = response;
-                            let t = timer(0, 100).subscribe(vl => {
-                                if (vl >= 10) {
-                                    // this.barcodePrint._elementRef.nativeElement.click();
-                                    t.unsubscribe();
-                                    let orderBodyReq = new OrderBodyReq(this.tokenService.getToken(), this.orderId)
-                                    this.orderService.getSuborder(orderBodyReq).subscribe({
-                                        next: response => {
-                                            if (response) {
-                                                this.getData(response);
-                                            }
-                                        },
-                                        error: error => {
-                                            console.log(error);
-                                        }
-                                    });
+                            // this.barcodePrint._elementRef.nativeElement.click();
+                            this.orderBodyAnsw.postCount = result
+                            let orderBodyReq = new OrderBodyReq(this.tokenService.getToken(), this.orderId)
+                            this.orderService.getSuborder(orderBodyReq).subscribe({
+                                next: response => {
+                                    if (response) {
+                                        this.getData(response);
+                                    }
+                                },
+                                error: error => {
+                                    console.log(error);
                                 }
                             });
                         }
@@ -571,8 +564,8 @@ export class OrderComponent implements OnInit {
     styleUrls: ['./barcode-prints/belpost-input-count-dialog/belpost-input-count-dialog.scss']
 })
 export class BarcodeInputCountDialogComponent {
-    // selectedVal: number = 1
-    selectedVal: string = ''
+    selectedVal: number = 1
+    // selectedVal: string = ''
     constructor(
         public dialogRef: MatDialogRef<BarcodeInputCountDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -583,8 +576,8 @@ export class BarcodeInputCountDialogComponent {
     }
 
     onOkClick() {
-        if (+this.selectedVal >= 1 && +this.selectedVal <= 4)
-            // if (this.selectedVal >= 1 && this.selectedVal <= 100)
+        // if (+this.selectedVal >= 1 && +this.selectedVal <= 4)
+        if (this.selectedVal >= 1 && this.selectedVal <= 100)
             this.dialogRef.close(+this.selectedVal);
     }
 }

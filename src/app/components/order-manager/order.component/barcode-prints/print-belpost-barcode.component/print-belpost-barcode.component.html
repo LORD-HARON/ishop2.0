@@ -1,34 +1,27 @@
-<table style="border:1px black solid; width: 320; height: 213;" *ngFor="let i of dataList">
+<table style="border:1px black solid; width: 320; height: 213;"
+    *ngFor="let i of Arr(data.postCount).fill(1); let x = index">
     <!-- <table style="border:1px black solid; width: 320; height: 213;"> -->
     <tr style="border: none">
         <td style="border: none; padding: 0 10px; align-content: center; font-size: large; font-weight: 600;"
             align="center">ОАО "Астомстрой"</td>
         <td style="border: none"></td>
-        <td style="border: none; padding: 0 10px; align-content: center; font-size: large; font-weight: 600; font-size: 50px;"
-            align="center">{{i.postCount}}</td>
+        <td style="border: none; padding: 0 0; align-content: center; font-size: large; font-weight: 600; font-size: 50px;"
+            align="center">{{x + 1}}</td>
     </tr>
     <tr style="border: none">
         <td style="border: none; padding: 0 2px 0 5px" align="center"><img [src]="imgSource + data.barcode" width="150"
                 height="55"></td>
         <td style="border: none; padding: 0 10px" align="center">
-            {{i.username}}
-            <!-- {{data.username}} -->
+            {{data.username}}
             <br>
             <br>
-            {{i.address}}
-            <!-- {{data.address}} -->
+            {{data.address}}
         </td>
     </tr>
     <tr style="border: none">
         <td style="border: none; padding: 0 10px; font-size: large; font-weight: 600;" align="center"> Заказ
-            №{{i.num}}
-            <!-- {{data.num}} -->
+            №{{data.num}}
         </td>
         <td style="border: none"></td>
-    </tr>
-    <tr style="border: none">
-        <td style="border: none; padding: 0 10px; font-size: large; font-weight: 600;" align="center">
-            Проверяйте модель, характеристики, комплектацию и состояние товара до подписания документов!!!
-        </td>
     </tr>
 </table>

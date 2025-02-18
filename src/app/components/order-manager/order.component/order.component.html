@@ -60,7 +60,6 @@
             <div class="img-box" *ngFor="let barcode of belpostBarcodes" (mouseenter)="selectBarcode(barcode)"
                 (mouseleave)="unSelectBarcode()">
                 <button mat-stroked-button class="bp-container" (mouseenter)="onPrintBelpost(barcode)"
-                    [printStyle]="{ th: {'border': '1px solid black'}, td: {'border': '1px solid black'}, table: {'border-collapse': 'collapse', 'width': '100%'}}"
                     printSectionId="print-belpost-barcode-section" ngxPrint>
                     <img [src]="imgSource + barcode" width="150" height="50">
                 </button>
@@ -184,10 +183,6 @@
                 </a>
             </div>
         </div>
-    </div>
-
-    <div id="print-barcode-section" hidden *ngIf="belPostAnsw">
-        <app-barcode-print-form [data]="belPostAnsw"></app-barcode-print-form>
     </div>
 
     <div id="print-belpost-barcode-section" hidden *ngIf="belpostData">
