@@ -21,7 +21,6 @@ export class HistoryService {
         private snackbarService: SnackbarService) { }
     getHistoryURL = environment.apiUrl + '/GetHistory'
     exportToExcelURl = environment.apiUrl + '/ExportToExcel'
-    clearHistoryURL = environment.apiUrl + '/ClearHistory'
     GetHistory(data: GetHistoryModel): Observable<HistoryReportModel[]> {
         return this.http.post<HistoryReportModel[]>(this.getHistoryURL, data)
     }
@@ -35,8 +34,5 @@ export class HistoryService {
                 this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
             }
         })
-    }
-    ClearHistory(data: GetHistoryModel): Observable<Status> {
-        return this.http.post<Status>(this.clearHistoryURL, data)
     }
 }

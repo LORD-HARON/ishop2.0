@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, Input, OnInit, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { map, Observable, startWith, timer } from "rxjs";
+import { catchError, map, Observable, of, startWith, timer } from "rxjs";
 import { BelPostAnsw } from "src/app/models/order.models/belpost-answ";
 import { ClientInfo } from "src/app/models/order.models/client-info";
 import { OrderBody } from "src/app/models/order.models/order-body";
@@ -133,6 +133,7 @@ export class OrderComponent implements OnInit {
     completButtonStatus: boolean = true;
     screenWidth: number
 
+    collectors$: Observable<string[]>
     ngOnInit(): void {
         this.getCollectors()
         this.screenWidth = this.adaptiveService.GetCurrentWidth()
@@ -154,9 +155,9 @@ export class OrderComponent implements OnInit {
 
     }
     filteredOptions: Observable<string[]>;
-    collectorsList: string[] = []
-    myControl = new FormControl();
 
+    myControl = new FormControl();
+    collectorsList: string[] = []
     getCollectors() {
         this.collectorsService.GetCollectorsNames(new Token(this.tokenService.getToken())).subscribe({
             next: result => {
@@ -168,6 +169,7 @@ export class OrderComponent implements OnInit {
             }
         })
     }
+
     inputAuto(element: string) {
         let test = new Observable<string[]>(x => x.next(this.collectorsList))
         this.filteredOptions = test

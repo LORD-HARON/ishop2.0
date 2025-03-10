@@ -96,8 +96,10 @@ export class TokenService {
 
     deleteCookie() {
         if (this.cookieService.check(this.cookieName)) {
+            console.log(123123);
+
             this.cookieService.delete(this.cookieName);
-            // this.cookieService.delete(this.name,  ' / ' ,  ' localhost');
+            //this.cookieService.delete(this.name,  ' / ' ,  ' localhost');
         }
     }
 

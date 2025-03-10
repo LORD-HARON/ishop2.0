@@ -37,6 +37,7 @@ export class OrderCollectorsReportComponent implements OnInit {
         { status: '24', statusName: 'Независимости' },
         { status: '25', statusName: 'Молодечно' },
         { status: '32', statusName: 'Outleto' },
+        { status: '33', statusName: 'Гродно' },
         { status: '34', statusName: 'Expobel' },
         { status: '35', statusName: 'Горецкого' },
     ]

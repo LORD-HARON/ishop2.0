@@ -57,7 +57,7 @@
                             <div class="ready-shipment"> отправлен </div>
                         </ng-template>
                         <ng-template ngSwitchCase="Заблокирован">
-                            <div class="cancel"> отправлен </div>
+                            <div class="cancel"> Отменен </div>
                         </ng-template>
                         <ng-template ngSwitchCase="Выполнен">
                             <div class="complete"> выполнен</div>
@@ -99,7 +99,7 @@
                     <small class="samovivoz" *ngIf="!o.order.delivery_type"> самовывоз </small>
                     <div>
                         <small>Время клиента:</small>
-                        <small class="called-time"> {{o.order.order_called_time}}</small>
+                        <small class="called-time"> {{o.order.order_called_time|date:'dd.MM.YYYY HH:mm:ss'}}</small>
                     </div>
                 </td>
                 <td *ngIf="screenWidth > 1000">
