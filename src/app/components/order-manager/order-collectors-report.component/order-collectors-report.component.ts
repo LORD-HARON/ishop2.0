@@ -11,6 +11,7 @@ import { GetCollectorsReportAnswerModel } from "src/app/models/collectors.models
 import { GetCollectorsReportModel } from "src/app/models/collectors.models/get-collectors-report";
 import { formatDate } from "@angular/common";
 import { GetCollectorsExcelModel } from "src/app/models/collectors.models/get-collectors-excel";
+import { trueStatus } from "src/app/pipes/translateShitStatus.pipe";
 
 
 @Component({
@@ -22,7 +23,8 @@ export class OrderCollectorsReportComponent implements OnInit {
     constructor(
         private collectorsService: CollectorsService,
         private tokenService: TokenService,
-        private snackbarService: SnackbarService
+        private snackbarService: SnackbarService,
+        private changePipe: trueStatus
     ) { }
     startDate: Date = new Date
     endDate: Date = new Date
@@ -41,7 +43,7 @@ export class OrderCollectorsReportComponent implements OnInit {
         { status: '34', statusName: 'Expobel' },
         { status: '35', statusName: 'Горецкого' },
     ]
-    displayedColumns: string[] = ['№ Заказа', 'Дата сборки', 'Артикул', 'Кол-во шт. в заявке', 'Коэфициент', 'ФИО']
+    displayedColumns: string[] = ['№ Заказа', 'Дата сборки', 'Артикул', 'Кол-во шт. в заявке', 'Коэфициент', 'ФИО', 'ТО']
 
     filteredOptions: Observable<string[]>;
     collectorsList: string[] = []
@@ -64,6 +66,9 @@ export class OrderCollectorsReportComponent implements OnInit {
         })
     }
     getExcelReport() {
+        const ChangeCollectorList = this.collectorsReportList.forEach(x => x.storeLoc = this.changePipe.transform(x.storeLoc, "store")!)
+        console.log(ChangeCollectorList);
+
         this.collectorsService.getExportToExcel(new GetCollectorsExcelModel(this.tokenService.getToken(), this.collectorsReportList))
     }
     getCollectors() {

@@ -3,8 +3,9 @@ export class GetCollectorsReportAnswerModel {
         public orderId: string,
         public collectDate: string,
         public article: string,
-        public count: string,
-        public coefficient: string,
-        public collector: string
+        public count: number,
+        public coefficient: number,
+        public collector: string,
+        public storeLoc: string
     ) { }
 }

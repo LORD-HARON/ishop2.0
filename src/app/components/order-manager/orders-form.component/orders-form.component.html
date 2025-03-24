@@ -48,8 +48,10 @@
             <button mat-menu-item *ngIf="isAdminIshop" (click)="openDataInvoiceDialog()"
                 class="invoice-settings-button">Настройка договоров
             </button>
-            <button mat-menu-item (click)="openCollectorsSettingDialog()" class="collectors-settings-button">Настройка
-                сборщиков</button>
+            <button mat-menu-item (click)="openCollectorsSettingDialog()" class="collectors-settings-button"
+                *ngIf="isAdminIshop">
+                Настройка сборщиков
+            </button>
             <button mat-menu-item (click)="onClickLogout()" class="logout-button">Выйти</button>
         </mat-menu>
     </div>

@@ -80,7 +80,7 @@ import { OrderCollectorsReportComponent } from './components/order-manager/order
     MatNativeDateModule,
     NgxPrintModule
   ],
-  providers: [MatNativeDateModule, { provide: MAT_DATE_LOCALE, useValue: 'ru-Ru' }],
+  providers: [MatNativeDateModule, { provide: MAT_DATE_LOCALE, useValue: 'ru-Ru' }, trueStatus],
   bootstrap: [AppComponent],
 
 })

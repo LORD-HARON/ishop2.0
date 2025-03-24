@@ -6,7 +6,7 @@ export interface PropList {
 }
 
 @Pipe({
-    name: 'trueStatus'
+    name: 'trueStatus',
 })
 export class trueStatus implements PipeTransform {
     deliveryTypes: PropList[] = [
@@ -24,6 +24,7 @@ export class trueStatus implements PipeTransform {
         { status: '32', statusName: 'Outleto' },
         { status: '34', statusName: 'Expobel' },
         { status: '35', statusName: 'Горецкого' },
+        { status: '33', statusName: 'Гродно' }
     ]
     statusList: PropList[] = [
         { status: 'не принят', statusName: 'Готов к сборке' },

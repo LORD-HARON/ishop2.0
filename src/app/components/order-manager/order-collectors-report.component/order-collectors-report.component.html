@@ -24,8 +24,7 @@
                 </button>
             </div>
             <div class="btn">
-                <button mat-stroked-button class="export" (click)="getExcelReport()"
-                    [disabled]="collectorsReportList.length == 0">
+                <button mat-stroked-button class="export" (click)="getExcelReport()" [disabled]="!collectorsReportList">
                     Export
                 </button>
             </div>
@@ -83,6 +82,9 @@
                 </td>
                 <td>
                     {{i.collector}}
+                </td>
+                <td>
+                    {{i.storeLoc | trueStatus: 'store'}}
                 </td>
             </tr>
         </table>
