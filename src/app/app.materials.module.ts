@@ -19,6 +19,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTableModule } from '@angular/material/table'
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatPaginatorModule } from '@angular/material/paginator';
 @NgModule({
     declarations: [
     ],
@@ -45,7 +46,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         MatAutocompleteModule,
         MatTableModule,
         MatButtonToggleModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatPaginatorModule
     ]
 })
 export class AppMaterialsModule { }

@@ -92,6 +92,10 @@ html, body {
 
     --mat-standard-button-toggle-background-color: rgba(255, 255, 255, 0.05);
     --mat-standard-button-toggle-selected-state-background-color: rgb(104, 104, 104);
+
+    --mat-paginator-container-background-color: rgba(255, 255, 255, 0.05);
+    --mat-paginator-container-text-color: white;
+    --mat-paginator-enabled-icon-color: white;
     .mat-mdc-button.mat-unthemed {
       --mdc-text-button-label-text-color: #fff;
   }

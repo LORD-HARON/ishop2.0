@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { PropList } from "../order-history.component/order-history.component";
 import { CollectorsModel } from "src/app/models/collectors.models/collectors";
 import { map, Observable } from "rxjs";
@@ -12,12 +12,13 @@ import { GetCollectorsReportModel } from "src/app/models/collectors.models/get-c
 import { formatDate } from "@angular/common";
 import { GetCollectorsExcelModel } from "src/app/models/collectors.models/get-collectors-excel";
 import { trueStatus } from "src/app/pipes/translateShitStatus.pipe";
+import { MatPaginator, MatPaginatorIntl, PageEvent } from "@angular/material/paginator";
 
 
 @Component({
     selector: 'app-collectors-report',
     templateUrl: './order-collectors-report.component.html',
-    styleUrls: ['./order-collectors-report.component.scss']
+    styleUrls: ['./order-collectors-report.component.scss'],
 })
 export class OrderCollectorsReportComponent implements OnInit {
     constructor(
@@ -59,6 +60,8 @@ export class OrderCollectorsReportComponent implements OnInit {
         this.collectorsService.GetCollectorsReport(new GetCollectorsReportModel(this.tokenService.getToken(), start, end, this.selectedStore, user)).subscribe({
             next: result => {
                 this.collectorsReportList = result
+                this.listLenght = result.length
+                this.updatePagedProducts()
             },
             error: error => {
                 console.log(error);
@@ -67,8 +70,6 @@ export class OrderCollectorsReportComponent implements OnInit {
     }
     getExcelReport() {
         const ChangeCollectorList = this.collectorsReportList.forEach(x => x.storeLoc = this.changePipe.transform(x.storeLoc, "store")!)
-        console.log(ChangeCollectorList);
-
         this.collectorsService.getExportToExcel(new GetCollectorsExcelModel(this.tokenService.getToken(), this.collectorsReportList))
     }
     getCollectors() {
@@ -92,5 +93,28 @@ export class OrderCollectorsReportComponent implements OnInit {
     private _filterCollectors(value, element: string): string[] {
         // const filterValue = value == '' || value == null ? value : value.toLowerCase();
         return value.filter(option => option.includes(element));
+    }
+
+    pageEvent: PageEvent;
+    listLenght = 0;
+    pageSize = 10;
+    pageIndex = 0;
+    pageSizeOptions = [5, 10, 25, 50];
+    newPageSizeOptions: number[] = []
+    currentPage = 0
+    showPageSizeOptions = true;
+
+    pagedCollectorsReportList: GetCollectorsReportAnswerModel[] = []
+
+    onPageChange(event: PageEvent) {
+        this.currentPage = event.pageIndex;
+        this.pageSize = event.pageSize;
+        this.updatePagedProducts();
+    }
+
+    updatePagedProducts() {
+        const startIndex = this.currentPage * this.pageSize;
+        this.newPageSizeOptions = [...this.pageSizeOptions, this.listLenght]
+        this.pagedCollectorsReportList = this.collectorsReportList.slice(startIndex, startIndex + this.pageSize);
     }
 }

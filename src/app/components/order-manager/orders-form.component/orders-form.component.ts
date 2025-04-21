@@ -111,9 +111,16 @@ export class OrdersFormComponent implements OnInit {
         })
     }
     onClickLogout() {
-        localStorage.clear();
-        this.tokenService.deleteCookie();
-        this.router.navigate(['/login']);
+        console.log(13);
+
+        try {
+            //localStorage.clear();
+            this.tokenService.deleteCookie();
+            this.router.navigate(['/login']);
+        } catch {
+            console.log('error');
+
+        }
     }
 }
 

@@ -46,7 +46,6 @@
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
-
             <!-- <input type="text" [matAutocomplete]="auto1" (input)="onInputNewCollector($event.target.value, i)"
             (ngModelChange)="inputAuto(i.collector)"
             (focusout)="onFocusoutCollector(i)" placeholder="Сборщик" [(ngModel)]="i.collector">
@@ -64,7 +63,7 @@
                     {{c}}
                 </td>
             </tr>
-            <tr *ngFor="let i of collectorsReportList">
+            <tr *ngFor="let i of pagedCollectorsReportList">
                 <td>
                     {{i.orderId}}
                 </td>
@@ -88,5 +87,9 @@
                 </td>
             </tr>
         </table>
+        <mat-paginator (page)="onPageChange($event)" [length]="listLenght" [pageSize]="pageSize"
+            [pageSizeOptions]="showPageSizeOptions ? newPageSizeOptions : []" [pageIndex]="pageIndex"
+            *ngIf="pagedCollectorsReportList.length != 0">
+        </mat-paginator>
     </div>
 </div>

@@ -36,6 +36,7 @@ import { BarcodeInputCountDialogComponent } from './components/order-manager/ord
 import { OrderSentComponent } from './components/order-manager/order-types/order-sent.component/order-sent.component';
 import { CollecotrsSettingComponent } from './components/order-manager/orders-form.component/collectors-setting.component/collectors-setting.component';
 import { OrderCollectorsReportComponent } from './components/order-manager/order-collectors-report.component/order-collectors-report.component';
+
 @NgModule({
   declarations: [
     AppComponent,

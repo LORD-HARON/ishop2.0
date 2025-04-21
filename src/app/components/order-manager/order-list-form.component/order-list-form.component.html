@@ -25,7 +25,6 @@
                     <div class="search-adres" *ngIf="isChecked && o.status === 'не принят'">
                         <mat-checkbox *ngIf="screenWidth < 1000" (change)="selectOrder(o)"></mat-checkbox>
                         <label *ngIf="screenWidth > 1000">
-
                             <input type="checkbox" (change)="selectOrder(o)">
                             <div class="icon">
                                 <span class="material-icons">
@@ -158,9 +157,8 @@
                             <mat-icon>keyboard_return</mat-icon>
                             <span>Вернуть в сборку</span>
                         </button>
-                        <button mat-menu-item (click)="openCompliteDialog(o, 2)"
-                            *ngIf="(o.status === 'в паузе' || o.status === 'завершен' || o.status === 'Отправлен') && isAdminIshop"
-                            [disabled]="o.order.isSendToBitrix" class="send-oms">
+                        <button mat-menu-item (click)="openCompliteDialog(o, 2)" [disabled]="o.order.isSendToBitrix"
+                            class="send-oms">
                             <mat-icon>send</mat-icon>
                             <span>Оправить в OMS</span>
                         </button>

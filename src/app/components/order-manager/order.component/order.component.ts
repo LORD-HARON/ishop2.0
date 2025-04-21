@@ -5,7 +5,6 @@ import { BelPostAnsw } from "src/app/models/order.models/belpost-answ";
 import { ClientInfo } from "src/app/models/order.models/client-info";
 import { OrderBody } from "src/app/models/order.models/order-body";
 import { OrderBodyAnsw } from "src/app/models/order.models/order-body-answ";
-import { OrderListAnsw } from "src/app/models/order.models/order-list-answ";
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -47,7 +46,7 @@ interface Collectors {
 export class OrderComponent implements OnInit {
     @Input() data: string;
     @ViewChild('barcodePrint', { static: true }) barcodePrint: any;
-    displayedColumns = ['Артикул', ' ', 'Штрихкод', 'Наименование', 'ед. изм.', 'Количество на складе', 'Требуемое количество', 'Собранное количество', 'Сборщик', 'Коэф.', ''];
+    displayedColumns = ['Артикул', ' ', 'Штрихкод', 'Наименование', 'ед. изм.', 'Количество на складе', 'Требуемое количество', 'Собранное количество', 'Сборщик', 'Строчки', ''];
     displayedColumnsPrint = ['Артикул', 'Штрихкод', 'Наименование', 'ед. изм.', 'Количество на складе', 'Требуемое количество', 'Собранное количество', 'Стоимость'];
     dataSource: Array<OrderBody> = [new OrderBody('', '', '', '', '0', '0', '0', false, '', '', '', '',)];
     client: ClientInfo = new ClientInfo('', '', '');
@@ -126,7 +125,6 @@ export class OrderComponent implements OnInit {
 
     private _filter(value: string): string[] {
         const filterValue = value.toLowerCase();
-
         return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
     }
 
@@ -150,6 +148,7 @@ export class OrderComponent implements OnInit {
                 console.log(error);
             }
         });
+        console.log(this.dataSource)
         this.userName = this.tokenService.getLogin();
         this.isAdminIshop = this.tokenService.getTitle() == 'ishopAdmin' ? true : false
 
@@ -179,7 +178,7 @@ export class OrderComponent implements OnInit {
     }
     private _filterCollectors(value, element: string): string[] {
         // const filterValue = value == '' || value == null ? value : value.toLowerCase();
-        return value.filter(option => option.includes(element));
+        return value.filter(option => option.toLocaleLowerCase().includes(element.toLocaleLowerCase()));
     }
     completOrder() {
         this.dataSource.forEach(i => {
@@ -254,7 +253,6 @@ export class OrderComponent implements OnInit {
             element.collector = event;
             element.changed = true;
             this.isDataChanged = this.checkDataChanged();
-
         }
     }
     onInputNewCoef(event: string, element: OrderBody): void {
@@ -310,7 +308,10 @@ export class OrderComponent implements OnInit {
                 next: response => {
                     switch (response.status) {
                         case 'true':
-                            this.snackbarService.openSnackGreenBar('Количество изменено');
+                            if (!this.checkCollector())
+                                this.snackbarService.openRedSnackBar('Количество изменено, но сборщик не найден, проверьте правильность ввода или обратить к администратору');
+                            else
+                                this.snackbarService.openSnackGreenBar('Количество изменено');
                             this.ngOnInit();
                             // this.disableSaveButton = false;
                             break;
@@ -332,6 +333,17 @@ export class OrderComponent implements OnInit {
         }
         else
             this.snackbarService.openRedSnackBar('Добавьте штрихкод');
+    }
+
+    checkCollector(): boolean {
+        let check = true
+        this.orderBodyAnsw.body.forEach(x => {
+            console.log(this.collectorsList.includes(x.collector));
+            if (!this.collectorsList.includes(x.collector)) {
+                check = false;
+            }
+        })
+        return check
     }
 
     checkDataChanged(): boolean {
@@ -378,6 +390,9 @@ export class OrderComponent implements OnInit {
         // this.belpostData = { barcode: code, username: this.orderBodyAnsw.aboutClient.fIO, address: this.orderBodyAnsw.aboutClient.adress, num: this.orderBodyAnsw.num }
         this.belpostData = { barcode: code, username: this.orderBodyAnsw.aboutClient.fIO, address: this.orderBodyAnsw.aboutClient.adress, num: this.orderBodyAnsw.num, postCount: this.orderBodyAnsw.postCount }
     }
+
+
+
 
     //!Dialogs
 

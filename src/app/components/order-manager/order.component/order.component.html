@@ -121,7 +121,7 @@
                     <input type="number" [min]="0"
                         *ngIf="screenWidth > 1000 && (orderStatus === 'завершен' || orderStatus === 'Выполнен')"
                         class="input" (input)="onInputNewCoef($event.target.value, i)" (focusout)="onFocusoutCoef(i)"
-                        placeholder="Коэф." [(ngModel)]="i.coefficient">
+                        placeholder="Строчки" [(ngModel)]="i.coefficient">
                 </td>
                 <td>
                     <div class="btn" *ngIf="screenWidth < 1000">
@@ -214,6 +214,7 @@
         <ng-template ngSwitchCase="32">Жуково</ng-template>
         <ng-template ngSwitchCase="34">Экспобел</ng-template>
         <ng-template ngSwitchCase="35">Горецкого</ng-template>
+
     </text>
 
     <br>
