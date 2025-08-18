@@ -155,3 +155,10 @@
         text-shadow: red 1px 0 10px;
     }
 }
+.order-return-from-send{
+    color: rgb(255, 94, 0)!important;
+    &:hover{
+        color: #fff!important;
+        text-shadow: rgb(255, 94, 0) 1px 0 10px;
+    }
+}

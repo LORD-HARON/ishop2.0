@@ -104,4 +104,34 @@
             </div>
         </div>
     </ng-template>
+    <ng-template [ngSwitchCase]="8">
+        <h3 mat-dialog-title>Подтвердить отправку заказа ?</h3>
+        <div mat-dialog-content class="mat-typography">
+            Вы действительно хотите подтвердить отправку заказа ?
+        </div>
+        <div mat-dialog-actions>
+            <div class="btn">
+                <button mat-raised-button [mat-dialog-close]="null" class="cancel">НЕТ</button>
+            </div>
+            <div class="btn">
+                <button mat-raised-button class="end-order" (click)="SendDeliveruOrder()"
+                    [disabled]="disableButton === true">Подтвердить</button>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template [ngSwitchCase]="9">
+        <h3 mat-dialog-title>Подтвердить возврат заказа ?</h3>
+        <div mat-dialog-content class="mat-typography">
+            Вы действительно хотите подтвердить возврат заказа ?
+        </div>
+        <div mat-dialog-actions>
+            <div class="btn">
+                <button mat-raised-button [mat-dialog-close]="null" class="cancel">НЕТ</button>
+            </div>
+            <div class="btn">
+                <button mat-raised-button class="order-return-from-send" (click)="BackDeliveryOrder()"
+                    [disabled]="disableButton === true">Подтвердить</button>
+            </div>
+        </div>
+    </ng-template>
 </div>

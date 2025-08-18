@@ -20,7 +20,7 @@
                     {{n}}
                 </td>
             </tr>
-            <tr *ngFor="let o of orderListAnsw">
+            <tr *ngFor="let o of orderListAnsw" [hidden]="o.testStatus == true && !isAdminIshop">
                 <td>
                     <div class="search-adres" *ngIf="isChecked && o.status === 'не принят'">
                         <mat-checkbox *ngIf="screenWidth < 1000" (change)="selectOrder(o)"></mat-checkbox>
@@ -102,12 +102,10 @@
                     </div>
                 </td>
                 <td *ngIf="screenWidth > 1000">
-                    <div class="fio">{{o.aboutClient.fIO}}</div>
+                    <!-- <div class="fio">{{o.aboutClient.fIO}}</div>
                     <ng-container *ngIf="o.aboutClient.adress !== ' , , ,'"> <small>
-                            {{o.aboutClient.adress}} </small></ng-container>
-                </td>
-                <td *ngIf="screenWidth > 1000">
-                    {{o.aboutWoker}}
+                            {{o.aboutClient.adress}} </small></ng-container> -->
+                    {{o.payloadStatus}}
                 </td>
                 <td class="table-place">
                     {{o.place}}
@@ -139,14 +137,14 @@
                         </button>
 
                         <button mat-menu-item (click)="openCompliteDialog(o, 4)"
-                            *ngIf="o.order.isCassa && (o.status === 'завершен' || o.status === 'Выполнен')"
+                            *ngIf="!o.order.delivery_type && (o.status === 'завершен' || o.status === 'Выполнен')"
                             [disabled]="o.order.isCassaPause" class="to-cassa">
                             <mat-icon>move_to_inbox</mat-icon>
                             <span>Запись в кассу</span>
                         </button>
 
                         <button mat-menu-item (click)="openCompliteDialog(o, 7)"
-                            *ngIf="o.order.isCassa && (o.status === 'завершен' || o.status === 'Выполнен')"
+                            *ngIf="!o.order.delivery_type && (o.status === 'завершен' || o.status === 'Выполнен')"
                             [disabled]="o.order.isCassaPause" class="to-programm-cassa">
                             <mat-icon>send_to_mobile</mat-icon>
                             <span>Запись в прог. кассу</span>
@@ -158,7 +156,8 @@
                             <span>Вернуть в сборку</span>
                         </button>
                         <button mat-menu-item (click)="openCompliteDialog(o, 2)" [disabled]="o.order.isSendToBitrix"
-                            class="send-oms">
+                            class="send-oms"
+                            *ngIf="(o.status === 'в паузе' || o.status === 'завершен' || o.status === 'Отправлен' || o.status == 'Выполнен') && isAdminIshop">
                             <mat-icon>send</mat-icon>
                             <span>Оправить в OMS</span>
                         </button>
@@ -180,7 +179,17 @@
                                 Удалить
                             </span>
                         </button>
-                        <button mat-menu-item *ngIf="(o.status === 'завершен' || o.status === 'Отправлен')"
+                        <button mat-menu-item *ngIf="o.status == 'Отправлен'" class="return-from-send"
+                            (click)="openCompliteDialog(o,9)">
+                            <mat-icon>
+                                assignment_return
+                            </mat-icon>
+                            <span>
+                                Возврат
+                            </span>
+                        </button>
+                        <button mat-menu-item
+                            *ngIf="(o.status === 'завершен' && o.order.delivery_type == null )|| o.status === 'Отправлен'"
                             (click)="openCompliteDialog(o, 1)" class="section-return">
                             <mat-icon>
                                 done
@@ -188,6 +197,13 @@
                             <span>
                                 Завершить заказ
                             </span>
+                        </button>
+                        <button mat-menu-item *ngIf="o.status === 'завершен' && o.order.delivery_type != null"
+                            class="section-return" (click)="openCompliteDialog(o,8)">
+                            <mat-icon>
+                                done
+                            </mat-icon>
+                            <span>Отправить</span>
                         </button>
                         <button mat-menu-item
                             *ngIf="((o.status === 'завершен'||o.status === 'Выполнен'  )|| isAdminIshop)"

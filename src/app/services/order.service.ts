@@ -45,6 +45,8 @@ export class OrderService {
     urlGetHistoryByOrder = this.urlOrder + '/GetHistoryByOrder/';
     urlDeleteOrderItem = this.urlOrder + '/deleteItem/'
     urlCheckArticle = this.urlOrder + '/CheckArticle/'
+    urlSendOrder = this.urlOrder + '/SendOrder/'
+    urlBackDeliveryORder = this.urlOrder + '/BackDeliveryOrder/'
 
     constructor(private http: HttpClient) { }
 
@@ -63,7 +65,7 @@ export class OrderService {
         return this.http.post<any>(`${this.urlGetSuborder}`, data);
     }
 
-    orderPause(data: PauseOrderReq): Observable<Status> {
+    orderPause(data: FindOrderReq): Observable<Status> {
         return this.http.post<Status>(`${this.urlPause}`, data);
     }
 
@@ -82,7 +84,7 @@ export class OrderService {
         return this.http.post<Status>(`${this.urlToProgrammCassa}`, data)
     }
 
-    orderReturnToAssembly(data: PauseOrderReq): Observable<Status> {
+    orderReturnToAssembly(data: FindOrderReq): Observable<Status> {
         return this.http.post<Status>(`${this.urlReturnToAssembly}`, data);
     }
 
@@ -90,7 +92,7 @@ export class OrderService {
         return this.http.post<BelPostAnsw>(`${this.urlBelpost}`, data);
     }
 
-    orderReturn(data: PauseOrderReq): Observable<Status> { //! delete
+    orderReturn(data: FindOrderReq): Observable<Status> { //! delete
         return this.http.post<Status>(`${this.urlReturn}`, data);
     }
 
@@ -114,7 +116,7 @@ export class OrderService {
         return this.http.post<Status>(`${this.urlEndOrder}`, data);
     }
 
-    orderReturnToRetail(data: PauseOrderReq): Observable<Status> {
+    orderReturnToRetail(data: FindOrderReq): Observable<Status> {
         return this.http.post<Status>(`${this.urlReturnToRetail}`, data);
     }
     orderDeleteItem(data: DeleteItemModel): Observable<Status> {
@@ -122,5 +124,11 @@ export class OrderService {
     }
     CheckArticle(data: CheckByArticleModel): Observable<Status> {
         return this.http.post<Status>(this.urlCheckArticle, data)
+    }
+    SendOrder(data: FindOrderReq): Observable<Status> {
+        return this.http.post<Status>(this.urlSendOrder, data)
+    }
+    BackDeliveryOrder(data: FindOrderReq): Observable<Status> {
+        return this.http.post<Status>(this.urlBackDeliveryORder, data)
     }
 }

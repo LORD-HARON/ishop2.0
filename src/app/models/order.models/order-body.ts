@@ -14,6 +14,8 @@ export class OrderBody {
         public measure?: string,
         public count_e_s?: string,
         public collector: string = '',
-        public coefficient?: string
+        public coefficient?: string,
+        public quadMatrix?: boolean,
+        public matrixStatus?: string
     ) { }
 }

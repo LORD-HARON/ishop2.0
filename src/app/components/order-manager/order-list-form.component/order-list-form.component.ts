@@ -37,7 +37,7 @@ export class OrderListFormComponent implements OnInit {
     orderListAnsw: OrderListAnsw[] = [];
     listOrders: Array<OrderListAnsw> = [];
     selectedColumns: string[]
-    displayedColumns = ['Статус', 'Заказ', 'Заказчик', 'Сборщик', 'Место', 'Примичание', 'Действие', 'Отправлен повторно'];
+    displayedColumns = ['Статус', 'Заказ', 'Статус оплаты', 'Место', 'Примичание', 'Действие', 'Отправлен повторно'];
     displayedTsdColumns = ['Статус', 'Заказ', 'Место', 'Действие']
     idShops: Array<any> = [
         { index: 0, id: '%' },
@@ -118,6 +118,7 @@ export class OrderListFormComponent implements OnInit {
                 next: response => {
                     if (response) {
                         this.orderListAnsw = response;
+                        console.log(this.orderListAnsw);
                     }
                 },
                 error: error => {
@@ -222,7 +223,7 @@ export class OrderListFormComponent implements OnInit {
     }
 
     onClickPauseOrGo(element: OrderListAnsw) {
-        let pauseOrderReq = new PauseOrderReq(this.tokenService.getToken(), element.order.sub_num, this.tokenService.getLogin(), `${element.order.num}.${element.place}`);
+        let pauseOrderReq = new FindOrderReq(this.tokenService.getToken(), element.order.sub_num, element.place);
         this.orderService.orderPause(pauseOrderReq).subscribe({
             next: response => {
                 if (response.status) {
@@ -324,7 +325,7 @@ export class OrderListFormComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result.status) {
-                let pauseOrderReq = new PauseOrderReq(this.tokenService.getToken(), element.order.sub_num, this.tokenService.getLogin(), `${element.order.num}.${element.place}`);
+                let pauseOrderReq = new FindOrderReq(this.tokenService.getToken(), element.order.sub_num, element.place);
                 this.orderService.orderReturn(pauseOrderReq).subscribe({
                     next: response => {
                         switch (response.status) {
@@ -356,26 +357,10 @@ export class OrderListFormComponent implements OnInit {
         });
     }
 
-    // onClickReturnToAssembly(id) {
-    //     let pauseOrderReq = new PauseOrderReq(this.tokenService.getToken(), id, this.tokenService.getLogin(), `${element.order.num}.${element.place}`);
-    //     this.orderService.orderReturnToAssembly(pauseOrderReq).subscribe({
-    //         next: response => {
-    //             if (response.status === 'true')
-    //                 this.snackbarService.openSnackGreenBar('Подзаказ возвращен в сборку');
-    //             else this.snackbarService.openRedSnackBar('Операция не выполнена', this.action, this.styleNoConnect);
-    //         },
-    //         error: error => {
-    //             console.log(error);
-    //             this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-    //         }
-    //     });
-    // }
-
     onDelete(element: OrderListAnsw) {
-        let pauseOrderReq = new PauseOrderReq(this.tokenService.getToken(), element.order.sub_num, this.tokenService.getLogin(), `${element.order.num}.${element.place}`);
+        let pauseOrderReq = new PauseOrderReq(this.tokenService.getToken(), element.order.sub_num);
         this.orderService.orderDelete(pauseOrderReq).subscribe({
             next: response => {
-
                 switch (response.status) {
                     case 'true':
                         this.snackbarService.openSnackGreenBar('Подзаказ удален');
@@ -491,6 +476,12 @@ export class OrderListFormComponent implements OnInit {
                 case 'delete':
                     this.snackbarService.openSnackGreenBar('Заказ удален')
                     break;
+                case 'backDeliv':
+                    this.snackbarService.openSnackGreenBar('Возврат заказа')
+                    break
+                case 'sended':
+                    this.snackbarService.openSnackGreenBar('Заказ отправлен')
+                    break
             }
         });
     }
@@ -535,7 +526,7 @@ export class ConfirmDialogComponent {
     //!#region Order operations 
     onColickCompleteOrder(element: OrderListAnsw = this.data.element) {
         this.disableButton = true;
-        let findOrderReq = new FindOrderReq(this.tokenService.getToken(), element.order.num, element.order.name);
+        let findOrderReq = new FindOrderReq(this.tokenService.getToken(), element.order.sub_num, element.order.name);
         this.orderService.orderCompliteOrder(findOrderReq).subscribe({
             next: response => {
                 console.log(response);
@@ -591,7 +582,7 @@ export class ConfirmDialogComponent {
 
     onClickReturnToAssembly(id = this.data.element.sub_num, order_num = `${this.data.element.num}.${this.data.element.num}`) {
         this.disableButton = true;
-        let pauseOrderReq = new PauseOrderReq(this.tokenService.getToken(), id, this.tokenService.getLogin(), order_num);
+        let pauseOrderReq = new FindOrderReq(this.tokenService.getToken(), id, "");
         this.orderService.orderReturnToAssembly(pauseOrderReq).subscribe({
             next: response => {
                 switch (response.status) {
@@ -669,7 +660,7 @@ export class ConfirmDialogComponent {
 
     onClickReturnToRetail(element: OrderListAnsw = this.data.element) {
         this.disableButton = true;
-        let returnToRetailOrder = new PauseOrderReq(this.tokenService.getToken(), element.order.sub_num, this.tokenService.getLogin(), `${element.order.num}.${element.place}`);
+        let returnToRetailOrder = new FindOrderReq(this.tokenService.getToken(), element.order.sub_num, element.place);
         this.orderService.orderReturnToRetail(returnToRetailOrder).subscribe({
             next: response => {
                 switch (response.status) {
@@ -692,7 +683,7 @@ export class ConfirmDialogComponent {
     }
 
     onDelete(element: OrderListAnsw = this.data.element) {
-        let pauseOrderReq = new PauseOrderReq(this.tokenService.getToken(), element.order.sub_num, this.tokenService.getLogin(), `${element.order.num}.${String(element.place)}`);
+        let pauseOrderReq = new PauseOrderReq(this.tokenService.getToken(), element.order.sub_num);
         this.orderService.orderDelete(pauseOrderReq).subscribe({
             next: response => {
                 switch (response.status) {
@@ -712,6 +703,52 @@ export class ConfirmDialogComponent {
                 this.dialogRef.close('error');
             }
         });
+    }
+    SendDeliveruOrder(element: OrderListAnsw = this.data.element) {
+        let findOrderReq = new FindOrderReq(this.tokenService.getToken(), element.order.sub_num, '')
+        console.log(findOrderReq);
+
+        this.orderService.SendOrder(findOrderReq).subscribe({
+            next: response => {
+                switch (response.status) {
+                    case 'true':
+                        this.dialogRef.close('sended')
+                        break;
+                    case 'error':
+                        this.dialogRef.close('error')
+                        break;
+                    case 'BadAuth':
+                        this.dialogRef.close('BadAuth')
+                        break
+                }
+            },
+            error: error => {
+                console.log(error);
+                this.dialogRef.close('error')
+            }
+        })
+    }
+    BackDeliveryOrder(element: OrderListAnsw = this.data.element) {
+        let findOrderReq = new FindOrderReq(this.tokenService.getToken(), element.order.sub_num, '')
+        this.orderService.BackDeliveryOrder(findOrderReq).subscribe({
+            next: response => {
+                switch (response.status) {
+                    case 'true':
+                        this.dialogRef.close('backDeliv')
+                        break;
+                    case 'error':
+                        this.dialogRef.close('error')
+                        break;
+                    case 'BadAuth':
+                        this.dialogRef.close('BadAuth')
+                        break
+                }
+            },
+            error: error => {
+                console.log(error);
+                this.dialogRef.close('error')
+            }
+        })
     }
     //#endregion
 }
@@ -768,7 +805,9 @@ export class InvoiceDialogComponent {
         this.showIFrame = true;
         console.log(this.nowFormatted)
         this.nowFormatted = formatDate(this.selectedDate, 'dd.MM.yyyy', 'en-US');
-        if (this.order.order.delivery_type === '')
+        console.log(this.order.order.delivery_type);
+
+        if (this.order.order.delivery_type == undefined)
             this.url = `${environment.apiUrl}/api/FastReport/ShowReportWithoutDelivery?Id=${this.order.order.sub_num}&EndTime=${this.selectedDaysCount}&Manager=${sendManager}&Date=${this.nowFormatted}&NameDocument=${invoiceNum}&DaysForBank=${this.selectedDaysCount}`
         else
             this.url = `${environment.apiUrl}/api/FastReport/ShowReportInvoice?Id=${this.order.order.sub_num}&EndTime=${this.selectedDaysCount}&Manager=${sendManager}&Date=${this.nowFormatted}&NameDocument=${invoiceNum}&DaysForBank=${this.selectedDaysCount}`

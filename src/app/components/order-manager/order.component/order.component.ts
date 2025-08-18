@@ -48,7 +48,7 @@ export class OrderComponent implements OnInit {
     @ViewChild('barcodePrint', { static: true }) barcodePrint: any;
     displayedColumns = ['Артикул', ' ', 'Штрихкод', 'Наименование', 'ед. изм.', 'Количество на складе', 'Требуемое количество', 'Собранное количество', 'Сборщик', 'Строчки', ''];
     displayedColumnsPrint = ['Артикул', 'Штрихкод', 'Наименование', 'ед. изм.', 'Количество на складе', 'Требуемое количество', 'Собранное количество', 'Стоимость'];
-    dataSource: Array<OrderBody> = [new OrderBody('', '', '', '', '0', '0', '0', false, '', '', '', '',)];
+    dataSource: Array<OrderBody> = [new OrderBody('', '', '', '', '0', '0', '0', false, '', '', '', '', '', '', '', false, '')];
     client: ClientInfo = new ClientInfo('', '', '');
     orderId = '';
     isDataChanged = false;
@@ -205,11 +205,14 @@ export class OrderComponent implements OnInit {
     }
 
     orderStatus: string;
+    deliveryType: string | null
     getData(response: OrderBodyAnsw) {
         this.orderBodyAnsw = response;
         this.fruits = response.place;
         this.client = this.orderBodyAnsw.aboutClient;
         this.dataSource = this.orderBodyAnsw.body;
+        console.log(this.dataSource);
+
         this.dataSource.forEach(element => {
             if (element.count_g != element.count_e) {
                 this.completButtonStatus = false
@@ -219,8 +222,10 @@ export class OrderComponent implements OnInit {
         this.getBelpostBarcodes(this.orderBodyAnsw.postCode);
         this.orderService.orderSearch(new FindOrderReq(this.tokenService.getToken(), this.orderBodyAnsw.num, this.orderBodyAnsw.name)).subscribe({
             next: response => {
-                if (response)
+                if (response) {
                     this.orderStatus = response[0].status;
+                    this.deliveryType = response[0].order.delivery_type
+                }
             },
             error: error => {
                 console.log(error);
@@ -464,7 +469,7 @@ export class OrderComponent implements OnInit {
     }
 
     onClickPauseOrGo() {
-        let pauseOrderReq = new PauseOrderReq(this.tokenService.getToken(), this.orderBodyAnsw.sub_num, this.tokenService.getLogin(), `${this.orderBodyAnsw.num}.${this.orderBodyAnsw.place}`);
+        let pauseOrderReq = new FindOrderReq(this.tokenService.getToken(), this.orderBodyAnsw.sub_num, "");
         this.orderService.orderPause(pauseOrderReq).subscribe({
             next: response => {
                 switch (response.status) {

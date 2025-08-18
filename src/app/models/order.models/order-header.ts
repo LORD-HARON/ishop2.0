@@ -6,10 +6,10 @@ export class OrderHeader {
         public datetime: string,
         public delivery_type: string,
         public order_called_time: string,
-        public isCassa: boolean,
+        // public isCassa: boolean,
         public isCassaPause: boolean,
-        public isReturn: boolean,
-        public virtual_products: string,
+        // public isReturn: boolean,
+        // public virtual_products: string,
         public isSendToBitrix: boolean,
     ) { }
 }

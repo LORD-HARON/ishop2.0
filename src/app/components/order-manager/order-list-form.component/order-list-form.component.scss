@@ -355,6 +355,19 @@ z-index: 1000;
         color: green;
     }
 }
+.return-from-send {
+        color: rgb(255, 94, 0);
+        &:hover{
+        color: #fff;
+        text-shadow: rgb(255, 94, 0) 1px 0 10px;
+        mat-icon{
+            color: #fff;
+        }
+    }
+    mat-icon{
+        color: rgb(255, 94, 0);
+    }
+}
 .assignment{
     color: rgb(54, 141, 141);
     &:hover{

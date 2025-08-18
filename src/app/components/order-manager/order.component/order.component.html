@@ -101,9 +101,14 @@
                 <td>{{i.count_e_s}}</td>
                 <td>{{i.count_e}}</td>
                 <td>
+                    <span *ngIf="i.matrixStatus != 'Оприходован' && i.quadMatrix"
+                        style="text-shadow: red 1px 0 10px; color: #fff;">Запрет на ввод
+                        матрица плюс</span>
                     <input type="text" [(ngModel)]="i.count_g" (input)="onInputNewCount($event.target.value, i)"
-                        (focusout)="onFocusout(i)" [min]="0" [max]="i.count_e" *ngIf="screenWidth > 1000" class="input">
-                    <span *ngIf="screenWidth < 1000">{{i.count_g}}</span>
+                        (focusout)="onFocusout(i)" [min]="0" [max]="i.count_e"
+                        *ngIf="(i.matrixStatus == 'Оприходован' || !i.quadMatrix) && screenWidth > 1000" class="input">
+                    <span
+                        *ngIf="screenWidth < 1000 && (i.matrixStatus == 'Оприходован' && i.quadMatrix)">{{i.count_g}}</span>
                 </td>
                 <td>
                     <input type="text"
@@ -124,7 +129,7 @@
                         placeholder="Строчки" [(ngModel)]="i.coefficient">
                 </td>
                 <td>
-                    <div class="btn" *ngIf="screenWidth < 1000">
+                    <div class="btn" *ngIf="screenWidth < 1000 && i.quadMatrix == false">
                         <button (click)="openOderCheckDialog(i)" class="scan">
                             <span class="material-symbols-outlined">
                                 barcode_scanner
@@ -158,7 +163,7 @@
 
         <div class="table-button-conteiner">
             <div style="position: relative;" (mouseleave)="showCompleteDialog = false">
-                <div class="btn" *ngIf="orderStatus === 'завершен'">
+                <div class="btn" *ngIf="orderStatus === 'завершен' && deliveryType == null">
                     <a id="save" (click)="showCompleteDialog = true" class="end-order">
                         Завершить заказ
                     </a>
