@@ -23,6 +23,8 @@
                 (click)="reload('statushistory')" *ngIf="isAdminIshop"> <span>История</span> </a>
             <a mat-list-item [routerLink]="['collectors-report']" [routerLinkActive]="['active']"
                 (click)="reload('collectors-report')" *ngIf="isAdminIshop"> <span>Отчет по сборке</span> </a>
+            <a mat-list-item [routerLink]="['marks-report']" [routerLinkActive]="['active']"
+                (click)="reload('marks-report')" *ngIf="isAdminIshop"> <span>Отчет по фишкам</span> </a>
         </div>
     </mat-drawer>
     <div class="sidenav-content">

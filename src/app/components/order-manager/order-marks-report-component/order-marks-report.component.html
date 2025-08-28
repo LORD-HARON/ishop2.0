@@ -1,0 +1,72 @@
+<div class="main">
+    <div class="filter-conteiner">
+        <div class="filter-conteiner-box">
+            <mat-form-field appearance="outline">
+                <mat-label>Выберите дату c:</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="startDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Выберите дату по:</mat-label>
+                <input matInput [matDatepicker]="picker1" [(ngModel)]="endDate">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+            <div class="btn">
+                <button mat-stroked-button class="filter" (click)="getReport()">
+                    Отобрать
+                </button>
+            </div>
+            <div class="btn">
+                <button mat-stroked-button class="clear">
+                    Очистить
+                </button>
+            </div>
+            <div class="btn">
+                <button mat-stroked-button class="export" (click)="getExcelReport()" [disabled]="!marksReportList">
+                    Export
+                </button>
+            </div>
+        </div>
+        <div class="filter-conteiner-box">
+            <mat-form-field appearance="outline">
+                <mat-label>Торговый объект:</mat-label>
+                <mat-select [(ngModel)]="selectedStore">
+                    <mat-option *ngFor="let s of storeList" [value]="s.status">{{s.statusName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Заказ</mat-label>
+                <input matInput type="text" [(ngModel)]="selectedOrder">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="table-conteiner">
+        <table>
+            <tr>
+                <td *ngFor="let c of displayedColumns">
+                    {{c}}
+                </td>
+            </tr>
+            <tr *ngFor="let i of pagedMarksReportList">
+                <td>
+                    {{i.order}}
+                </td>
+                <td>
+                    {{i.storeloc | trueStatus: 'store'}}
+                </td>
+                <td>
+                    {{i.marksCount}}
+                </td>
+                <td>
+                    {{i.completeDate| date: 'dd:MM:yyyy HH:mm'}}
+                </td>
+            </tr>
+        </table>
+        <mat-paginator (page)="onPageChange($event)" [length]="listLenght" [pageSize]="pageSize"
+            [pageSizeOptions]="showPageSizeOptions ? newPageSizeOptions : []" [pageIndex]="pageIndex"
+            *ngIf="pagedMarksReportList.length != 0">
+        </mat-paginator>
+    </div>
+</div>

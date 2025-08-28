@@ -62,7 +62,7 @@ export class OrderComponent implements OnInit {
     belpostData: BelpostData | null
     userName = '';
 
-    orderBodyAnsw: OrderBodyAnsw = new OrderBodyAnsw('', '', '', false, '', 0, new ClientInfo('', '', ''), [new OrderBody('', '', '', '', '0', '0', '0', false, '', '', '')], []);
+    orderBodyAnsw: OrderBodyAnsw = new OrderBodyAnsw('', '', '', false, '', 0, new ClientInfo('', '', ''), [new OrderBody('', '', '', '', '0', '0', '0', false, '', '', '')], [], 0);
     countReadyСhange: number;
     belPostAnsw: BelPostAnsw
     splitElement = ';';
@@ -137,6 +137,17 @@ export class OrderComponent implements OnInit {
         this.screenWidth = this.adaptiveService.GetCurrentWidth()
         this.matIconReg.setDefaultFontSetClass('material-symbols-outlined');
         // this.titleService.setTitle(this.titleService.getTitle() + ' №' + this.orderId);
+        this.getSubOrder()
+        this.userName = this.tokenService.getLogin();
+        this.isAdminIshop = this.tokenService.getTitle() == 'ishopAdmin' ? true : false
+
+    }
+    filteredOptions: Observable<string[]>;
+
+    myControl = new FormControl();
+    collectorsList: string[] = []
+
+    getSubOrder() {
         let orderBodyReq = new OrderBodyReq(this.tokenService.getToken(), this.orderId)
         this.orderService.getSuborder(orderBodyReq).subscribe({
             next: response => {
@@ -149,14 +160,7 @@ export class OrderComponent implements OnInit {
             }
         });
         console.log(this.dataSource)
-        this.userName = this.tokenService.getLogin();
-        this.isAdminIshop = this.tokenService.getTitle() == 'ishopAdmin' ? true : false
-
     }
-    filteredOptions: Observable<string[]>;
-
-    myControl = new FormControl();
-    collectorsList: string[] = []
     getCollectors() {
         this.collectorsService.GetCollectorsNames(new Token(this.tokenService.getToken())).subscribe({
             next: result => {
@@ -328,6 +332,14 @@ export class OrderComponent implements OnInit {
                             this.snackbarService.openRedSnackBar('Токен устарел');
                             // this.disableSaveButton = false;
                             break
+                        case 'MarksTrue':
+                            if (!this.checkCollector())
+                                this.snackbarService.openRedSnackBar('Количество изменено, но сборщик не найден, проверьте правильность ввода или обратить к администратору');
+                            else
+                                this.snackbarService.openSnackGreenBar('Количество изменено');
+                            this.ngOnInit();
+                            setTimeout(() => { this.openMarksNoteDialog(this.orderBodyAnsw.marksCount) }, 1000)
+                            break;
                     }
                 },
                 error: error => {
@@ -487,7 +499,6 @@ export class OrderComponent implements OnInit {
                         this.snackbarService.openRedSnackBar('Токен устарел')
                         break;
                 }
-
             },
             error: error => {
                 console.log(error);
@@ -577,6 +588,11 @@ export class OrderComponent implements OnInit {
     }
     back() {
         this.router.navigate(['/']);
+    }
+    openMarksNoteDialog(element: number) {
+        const dialogRef = this.dialog.open(OrderMarksNoteDialog, {
+            data: { marks: element }
+        })
     }
 }
 
@@ -681,4 +697,16 @@ export class OrderCheckBarcodeDialogComponent implements OnInit {
         this.dialogRef.close()
     }
 
+}
+
+
+
+@Component({
+    templateUrl: './order-dialog/order-marks-note-dialog/order-marks-note.dialog.html',
+    styleUrls: ['./order-dialog/order-marks-note-dialog/order-marks-note.dialog.scss']
+})
+export class OrderMarksNoteDialog {
+    constructor(
+        @Inject(MAT_DIALOG_DATA) public data: any,
+    ) { }
 }

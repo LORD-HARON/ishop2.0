@@ -1,0 +1,155 @@
+.main{
+    height: 94vh;
+    width: 100%;
+    color: #fff;
+    .filter-conteiner{
+        .filter-conteiner-box{
+            display:  flex;
+            margin-top: 5px;
+            mat-form-field{
+                margin-left: 10px;
+            }
+            button{
+                margin-left: 10px;
+            }
+        }
+    }
+.table-conteiner{
+    width: 100%;
+    height: 85.5%;
+    overflow: auto;
+    border-radius: 20px;
+    table{
+        width: 100%;
+        text-align: center;
+        font-size: 1.32em;
+        border-collapse: collapse;
+        tr{
+            height: 40px;
+            &:first-child{
+                background: rgba(255, 255, 255, 0.1);
+                box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.5);
+                border-right: 1px solid rgba(255, 255, 255, 0.2);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                color: #9e9e9e;
+            }
+        }
+    }
+}
+}
+.btn {
+    position: relative;
+    width: 110px;
+    height: 40px;
+    margin-left: 5px;
+}
+.btn a,.btn button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.01);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+    border-radius: 30px;
+    z-index: 1;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: 0.5s;
+    backdrop-filter: blur(15px);
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    font-weight: bold;
+}
+.export{
+    color: green!important;
+    &:hover{
+        text-shadow: green 1px 0 10px;
+        color: #fff;
+    }
+}
+.clear{
+    color: #FB0070!important;
+    &:hover{
+        text-shadow: #FB0070 1px 0 10px;
+        color: #fff;
+    }
+}
+.filter{
+    color: greenyellow!important;
+    &:hover{
+        text-shadow: greenyellow 1px 0 10px;
+        color: #fff;
+    }
+}
+.btn:hover a, .btn:hover button {
+    letter-spacing: 3px;
+    color: #fff;
+}
+.btn a::before, .btn button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0.15), transparent);
+    transform: skewX(45deg) translateX(0);
+    transition: 0.5s;
+}
+.btn:hover a::before {
+    transform: skewX(45deg) translateX(200%);
+}
+.btn:hover button::before{
+    transform: skewX(45deg) translateX(200%);
+}
+// .form .btn::before {
+//     content: "";
+//     position: absolute;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     bottom: -5px;
+//     width: 30px;
+//     height: 10px;
+//     background: #f00;
+//     border-radius: 10px;
+//     transition: 0.5s;
+//     transition-delay: 0s;
+// }
+.btn:hover::before {
+    bottom: 0;
+    height: 50%;
+    width: 80%;
+    border-radius: 30px;
+    transition-delay: 0.5s;
+}
+
+// .form .btn::after {
+//     content: "";
+//     position: absolute;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     top: -5px;
+//     width: 30px;
+//     height: 10px;
+//     background: #f00;
+//     border-radius: 10px;
+//     transition: 0.5s;
+//     transition-delay: 0s;
+// }
+.btn:hover::after {
+    top: 0;
+    height: 50%;
+    width: 80%;
+    border-radius: 30px;
+    transition-delay: 0.5s;
+}

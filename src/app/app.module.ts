@@ -36,7 +36,8 @@ import { BarcodeInputCountDialogComponent } from './components/order-manager/ord
 import { OrderSentComponent } from './components/order-manager/order-types/order-sent.component/order-sent.component';
 import { CollecotrsSettingComponent } from './components/order-manager/orders-form.component/collectors-setting.component/collectors-setting.component';
 import { OrderCollectorsReportComponent } from './components/order-manager/order-collectors-report.component/order-collectors-report.component';
-
+import { OrderMarksReportComponent } from './components/order-manager/order-marks-report-component/order-marks-report.component';
+import { OrderMarksNoteDialog } from './components/order-manager/order.component/order.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +68,9 @@ import { OrderCollectorsReportComponent } from './components/order-manager/order
     OrderCheckBarcodeDialogComponent,
     OrderSentComponent,
     CollecotrsSettingComponent,
-    OrderCollectorsReportComponent
+    OrderCollectorsReportComponent,
+    OrderMarksReportComponent,
+    OrderMarksNoteDialog
   ],
   imports: [
     BrowserModule,

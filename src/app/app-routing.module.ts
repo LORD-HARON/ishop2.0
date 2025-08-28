@@ -13,19 +13,21 @@ import { OrderHistoryComponent } from './components/order-manager/order-history.
 import { loginGuard } from './guards/login.guard';
 import { OrderComponent } from './components/order-manager/order.component/order.component';
 import { OrderCollectorsReportComponent } from './components/order-manager/order-collectors-report.component/order-collectors-report.component';
+import { OrderMarksReportComponent } from './components/order-manager/order-marks-report-component/order-marks-report.component';
 
 
 const childRoutes: Routes = [
-  { path: 'ready-build', component: OrderReadyBuildComponent, canActivate: [loginGuard] },
-  { path: 'uncompleted', component: OrderUncompletedComponent, canActivate: [loginGuard] },
-  { path: 'ready-shipment', component: OrderReadyShipmentComponent, canActivate: [loginGuard] },
-  { path: 'sent', component: OrderReadyShipmentComponent, canActivate: [loginGuard] },
-  { path: 'return-to-retail', component: OrderReturnToRetailComponent, canActivate: [loginGuard] },
-  { path: 'canceled', component: OrderCanceledComponent, canActivate: [loginGuard] },
-  { path: 'completed', component: OrderCompletedComponent, canActivate: [loginGuard] },
-  { path: 'statushistory', component: OrderHistoryComponent, canActivate: [loginGuard] },
-  { path: 'order/:id', component: OrderComponent, data: { id: '1', barcodes: '' }, canActivate: [loginGuard] },
-  { path: 'collectors-report', component: OrderCollectorsReportComponent }
+  { path: 'ready-build', component: OrderReadyBuildComponent },
+  { path: 'uncompleted', component: OrderUncompletedComponent },
+  { path: 'ready-shipment', component: OrderReadyShipmentComponent },
+  { path: 'sent', component: OrderReadyShipmentComponent },
+  { path: 'return-to-retail', component: OrderReturnToRetailComponent },
+  { path: 'canceled', component: OrderCanceledComponent },
+  { path: 'completed', component: OrderCompletedComponent },
+  { path: 'statushistory', component: OrderHistoryComponent },
+  { path: 'order/:id', component: OrderComponent, data: { id: '1', barcodes: '' } },
+  { path: 'collectors-report', component: OrderCollectorsReportComponent },
+  { path: 'marks-report', component: OrderMarksReportComponent }
 ]
 
 const routes: Routes = [

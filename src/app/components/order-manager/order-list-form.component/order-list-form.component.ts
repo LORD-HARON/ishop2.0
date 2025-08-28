@@ -235,6 +235,7 @@ export class OrderListFormComponent implements OnInit {
                                 if (element.status === 'ОТЛОЖЕН')
                                     element.status = 'не принят';
                             break;
+
                         case 'null':
                             this.snackbarService.openRedSnackBar('Подзаказ не найден')
                             break;
