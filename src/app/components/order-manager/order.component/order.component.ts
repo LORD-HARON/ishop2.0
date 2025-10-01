@@ -210,6 +210,7 @@ export class OrderComponent implements OnInit {
 
     orderStatus: string;
     deliveryType: string | null
+    totalSum: number = 0
     getData(response: OrderBodyAnsw) {
         this.orderBodyAnsw = response;
         this.fruits = response.place;
@@ -218,10 +219,12 @@ export class OrderComponent implements OnInit {
         console.log(this.dataSource);
 
         this.dataSource.forEach(element => {
+            this.totalSum += Number(element.price)
             if (element.count_g != element.count_e) {
                 this.completButtonStatus = false
                 return
             }
+
         });
         this.getBelpostBarcodes(this.orderBodyAnsw.postCode);
         this.orderService.orderSearch(new FindOrderReq(this.tokenService.getToken(), this.orderBodyAnsw.num, this.orderBodyAnsw.name)).subscribe({
@@ -709,4 +712,5 @@ export class OrderMarksNoteDialog {
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
     ) { }
+
 }

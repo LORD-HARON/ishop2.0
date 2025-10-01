@@ -620,6 +620,9 @@ export class ConfirmDialogComponent {
                     case 'BadAuth':
                         this.dialogRef.close('BadAuth')
                         break
+                    default:
+                        this.dialogRef.close('error')
+                        break
                 }
                 this.dialogRef.close('Cassa')
             },

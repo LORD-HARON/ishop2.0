@@ -189,7 +189,7 @@
                             </span>
                         </button>
                         <button mat-menu-item
-                            *ngIf="(o.status === 'завершен' && o.order.delivery_type == null )|| o.status === 'Отправлен'"
+                            *ngIf="(o.status === 'завершен' && o.order.delivery_type == '' )|| o.status === 'Отправлен'"
                             (click)="openCompliteDialog(o, 1)" class="section-return">
                             <mat-icon>
                                 done
@@ -198,7 +198,7 @@
                                 Завершить заказ
                             </span>
                         </button>
-                        <button mat-menu-item *ngIf="o.status === 'завершен' && o.order.delivery_type != null"
+                        <button mat-menu-item *ngIf="o.status === 'завершен' && o.order.delivery_type != ''"
                             class="section-return" (click)="openCompliteDialog(o,8)">
                             <mat-icon>
                                 done
